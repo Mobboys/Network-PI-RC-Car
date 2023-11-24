@@ -16,7 +16,7 @@ def send(address, RPIsocket, cap):
     print("are you running here???")
     _, frame = cap.read()
     serialized = pickle.dumps(frame)
-    print("type:", serialized.shape)
+    print("type:", type(serialized))
     RPIsocket.sendto("serialized", address)
 
 
