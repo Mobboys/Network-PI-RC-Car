@@ -2,27 +2,29 @@ import socket
 import RPi.GPIO as GPIO
 import time
 import cv2
+import numpy as np
 import pickle
+import io
+from mlsocket import MLSocket
 
 
-def receive(RPIsocket, bufferSize):
-    data, address = RPIsocket.recvfrom(bufferSize)
+def receive(conn, bufferSize):
+    data = conn.recv(bufferSize)
     data = data.decode('utf-8')
     controllerInputs = [float(x) for x in data.split(',')]
-    return controllerInputs, address
+    return controllerInputs
 
 
-def send(address, RPIsocket, cap):
+def send(conn, cap):
     _, frame = cap.read()
-    _, buffer = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 30])
-    serialized = pickle.dumps(buffer)
-    RPIsocket.sendto(serialized, address)
+    # _, buffer = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 30])
+    # serialized = pickle.dumps(buffer)
+    conn.send(frame)
 
 
 def motorControl(controllerInputs, lastAngle, servo1):
     angle = controllerInputs[0]
     if lastAngle != angle:
-        #print(angle)
         servo1.ChangeDutyCycle(2+(angle/18))
         lastAngle = angle
         return angle
@@ -45,20 +47,23 @@ def main():
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
 
-    bufferSize = 1_000_000
+    bufferSize = 1024
     serverPort = 5000
     serverIP = '192.168.0.99'
 
 
-    RPIsocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    RPIsocket.bind((serverIP, serverPort))
+    #RPIsocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    #RPIsocket.bind((serverIP, serverPort))
     
-    print ('Server Ready...')
-    
-    while True:
-        controllerInputs, address = receive(RPIsocket, bufferSize)
-        send(address, RPIsocket, cap)
-        lastAngle = motorControl(controllerInputs, lastAngle, servo1)
+    with MLSocket() as s:
+        s.bind((serverIP, serverPort))
+        s.listen()
+        conn, address = s.accept()
+        
+        while True:
+            controllerInputs = receive(conn, bufferSize)
+            lastAngle = motorControl(controllerInputs, lastAngle, servo1)
+            send(conn, cap)
         
 
 
