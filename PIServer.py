@@ -13,11 +13,11 @@ def receive(RPIsocket, bufferSize):
 
 
 def send(address, RPIsocket, cap):
-    print("are you running here???")
     _, frame = cap.read()
     serialized = pickle.dumps(frame)
-    print("type:", type(serialized))
-    RPIsocket.sendto("serialized".encode(), address)
+    print("pre-send")
+    RPIsocket.sendto(serialized, address)
+    print("pose-send weeeeeee")
 
 
 def motorControl(controllerInputs, lastAngle, servo1):
@@ -55,11 +55,8 @@ def main():
 
     print ('Server Ready...')
     while True:
-        print("wtf?")
         controllerInputs, address = receive(RPIsocket, bufferSize)
-        print("here???")
         send(address, RPIsocket, cap)
-        print("hello?")
         lastAngle = motorControl(controllerInputs, lastAngle, servo1)
         
 
