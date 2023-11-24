@@ -17,7 +17,7 @@ def send(address, RPIsocket, cap):
     _, frame = cap.read()
     serialized = pickle.dumps(frame)
     print("type:", serialized.shape)
-    RPIsocket.sendto(serialized, address)
+    RPIsocket.sendto("serialized", address)
 
 
 def motorControl(controllerInputs, lastAngle, servo1):
