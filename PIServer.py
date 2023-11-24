@@ -6,7 +6,7 @@ import pickle
 
 
 def receive(RPIsocket, bufferSize):
-    data, address = RPIsocket.recvfrom(bufferSize)
+    data, address = RPIsocket.recv(bufferSize)
     data = data.decode('utf-8')
     controllerInputs = [float(x) for x in data.split(',')]
     return controllerInputs, address
@@ -16,7 +16,7 @@ def send(address, RPIsocket, cap):
     _, frame = cap.read()
     _, buffer = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 30])
     serialized = pickle.dumps(buffer)
-    RPIsocket.sendto(serialized, address)
+    RPIsocket.send(serialized, address)
 
 
 def motorControl(controllerInputs, lastAngle, servo1):
@@ -45,7 +45,7 @@ def main():
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
 
-    bufferSize = 1_000_000
+    bufferSize = 1024
     serverPort = 5000
     serverIP = '192.168.0.99'
 
