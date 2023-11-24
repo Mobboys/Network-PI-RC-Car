@@ -45,15 +45,16 @@ def main():
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
 
-    bufferSize = 1024
+    bufferSize = 1_000_000
     serverPort = 5000
     serverIP = '192.168.0.99'
 
 
     RPIsocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     RPIsocket.bind((serverIP, serverPort))
-
+    
     print ('Server Ready...')
+    
     while True:
         controllerInputs, address = receive(RPIsocket, bufferSize)
         send(address, RPIsocket, cap)
