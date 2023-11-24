@@ -16,7 +16,8 @@ def main():
         serialized = pickle.dumps(frame)
         frame = pickle.loads(serialized)
 
-        cv2.imshow('Camera Feed', frame)
+        print(frame.size, frame)
+        #cv2.imshow('Camera Feed', frame)
         
         if cv2.waitKey(1) == ord('q'):
             break
