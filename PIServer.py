@@ -15,13 +15,14 @@ def receive(RPIsocket, bufferSize):
 def send(address, RPIsocket, cap):
     _, frame = cap.read()
     serialized = pickle.dumps(frame)
-    RPIsocket.sendto("test".encode('utf-8'), address)
+    RPIsocket.sendto(serialized, address)
+    print(serialized.shape)
 
 
 def motorControl(controllerInputs, lastAngle, servo1):
     angle = controllerInputs[0]
     if lastAngle != angle:
-        print(angle, lastAngle)
+        #print(angle)
         servo1.ChangeDutyCycle(2+(angle/18))
         lastAngle = angle
         return angle
@@ -54,7 +55,7 @@ def main():
     print ('Server Ready...')
     while True:
         controllerInputs, address = receive(RPIsocket, bufferSize)
-        #send(address, RPIsocket, cap)
+        send(address, RPIsocket, cap)
         lastAngle = motorControl(controllerInputs, lastAngle, servo1)
         
 
