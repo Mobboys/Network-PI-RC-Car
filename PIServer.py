@@ -14,10 +14,10 @@ def receive(RPIsocket, bufferSize):
 
 def send(address, RPIsocket, cap):
     _, frame = cap.read()
+    print(frame)
     serialized = pickle.dumps(frame)
-    print("pre-send")
+    print(frame, serialized)
     RPIsocket.sendto(serialized, address)
-    print("pose-send weeeeeee")
 
 
 def motorControl(controllerInputs, lastAngle, servo1):
