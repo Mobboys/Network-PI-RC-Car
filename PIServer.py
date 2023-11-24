@@ -58,10 +58,10 @@ def main():
     with MLSocket() as s:
         s.bind((serverIP, serverPort))
         print('Server starting....')
-        s.listen()
+        s.listen(1)
         conn, address = s.accept()
         print('Connected!')
-        
+
         while True:
             controllerInputs = receive(conn, bufferSize)
             lastAngle = motorControl(controllerInputs, lastAngle, servo1)
