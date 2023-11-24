@@ -101,7 +101,7 @@ def send_gamepad_data(serverAddress, joy, UDPClient):
     x, y, x2, y2, a, b, rb = joy.read()
     x = round(x * 35 + 95, 1)
     data = str('{},{},{},{},{}').format(x, y, x2, y2, rb).encode('utf-8')
-    UDPClient.send(data, serverAddress)
+    UDPClient.send(data)
     #print(data)
 
 
