@@ -21,7 +21,7 @@ def send(address, RPIsocket, cap):
 def motorControl(controllerInputs, lastAngle, servo1):
     angle = controllerInputs[0]
     if lastAngle != angle:
-        print(angle)
+        print(angle, lastAngle)
         servo1.ChangeDutyCycle(2+(angle/18))
         lastAngle = angle
         return angle
@@ -52,8 +52,9 @@ def main():
     print ('Server Ready...')
     while True:
         controllerInputs, address = receive(RPIsocket, bufferSize)
-        send(address, RPIsocket, cap)
+        #send(address, RPIsocket, cap)
         lastAngle = motorControl(controllerInputs, lastAngle, servo1)
+        
 
 
 if __name__ == "__main__":
