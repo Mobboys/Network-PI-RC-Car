@@ -57,9 +57,8 @@ def main():
     
     while True:
         controllerInputs, address = receive(RPIsocket, bufferSize)
-        send(address, RPIsocket, cap)
         lastAngle = motorControl(controllerInputs, lastAngle, servo1)
-        
+        # send(address, RPIsocket, cap)  # uh oh he too big
 
 
 if __name__ == "__main__":
