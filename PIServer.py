@@ -52,20 +52,14 @@ def main():
     serverIP = '192.168.0.99'
 
 
-    #RPIsocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    #RPIsocket.bind((serverIP, serverPort))
-    
-    with MLSocket() as s:
-        s.bind((serverIP, serverPort))
-        print('Server starting....')
-        s.listen(1)
-        conn, address = s.accept()
-        print('Connected!')
+    RPIsocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    RPIsocket.bind((serverIP, serverPort))
 
-        while True:
-            controllerInputs = receive(conn, bufferSize)
-            lastAngle = motorControl(controllerInputs, lastAngle, servo1)
-            send(conn, cap)
+    print ('Server Ready...')
+    while True:
+        controllerInputs, address = receive(RPIsocket, bufferSize)
+        send(address, RPIsocket, cap)
+        lastAngle = motorControl(controllerInputs, lastAngle, servo1)
         
 
 

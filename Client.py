@@ -5,9 +5,6 @@ import math
 import threading
 import cv2
 import pickle
-import sys
-import numpy as np
-from mlsocket import MLSocket
 
 
 class XboxController(object):
@@ -106,20 +103,18 @@ def send_gamepad_data(joy, s):
     #print(data)
 
 
-def receive_image_data(s, bufferSize):
-    frame = s.recv(bufferSize)
-    cv2.imshow('Camera Feed', frame)
+def receive_image_data(UDPClient, bufferSize):
+    frameENC, _ = UDPClient.recvfrom(bufferSize)
+    # frame = pickle.loads(frameENC)
+    # cv2.imshow('Camera Feed', frame)
 
+    print(frameENC)
 
 
 def main():
-    connection = ('rc-receiver-udp.at.remote.it', 33001)
+    serverAddress = ('rc-receiver-udp.at.remote.it', 33001)
     bufferSize = 1024
-    #UDPClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    print('Client Connecting...')
-    s = MLSocket()
-    s.connect(connection)
-    print('Connected!')
+    UDPClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     joy = XboxController()
 
     while True:
