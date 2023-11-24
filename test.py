@@ -9,18 +9,21 @@ def main():
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
 
-    while True:
-        _, frame = cap.read()
-
+    if True:
+        ret, frame = cap.read()
+        print(ret, frame)
+    
         # serialize and deserialize
-        serialized = pickle.dumps(frame)
-        frame = pickle.loads(serialized)
+        # serialized = pickle.dumps(frame)
+        # frame = pickle.loads(serialized)
 
-        print(frame)
+        #buffer = cv2.imencode(".jpg",photo,[int(cv2.IMWRITE_JPEG_QUALITY),30])
+
+        # print(frame)
         #cv2.imshow('Camera Feed', frame)
         
-        if cv2.waitKey(1) == ord('q'):
-            break
+        # if cv2.waitKey(1) == ord('q'):
+        #     break
 
     cap.release()
     cv2.destroyAllWindows()
