@@ -14,10 +14,8 @@ def receive(RPIsocket, bufferSize):
 
 def send(address, RPIsocket, cap):
     _, frame = cap.read()
-    print(frame)
-    buffer = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY),30])
+    _, buffer = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 30])
     serialized = pickle.dumps(buffer)
-    print(frame, serialized)
     RPIsocket.sendto(serialized, address)
 
 
