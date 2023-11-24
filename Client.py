@@ -106,7 +106,7 @@ def send_gamepad_data(serverAddress, joy, UDPClient):
 
 def receive_image_data(UDPClient, bufferSize):
     frameENC, _ = UDPClient.recvfrom(bufferSize)
-    #frame = pickle.loads(frameENC)
+    # frame = pickle.loads(frameENC)
     # cv2.imshow('Camera Feed', frame)
 
     print(frameENC)

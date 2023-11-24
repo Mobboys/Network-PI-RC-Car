@@ -17,7 +17,7 @@ def main():
         # serialized = pickle.dumps(frame)
         # frame = pickle.loads(serialized)
 
-        #buffer = cv2.imencode(".jpg",photo,[int(cv2.IMWRITE_JPEG_QUALITY),30])
+        buffer = cv2.imencode(".jpg",photo,[int(cv2.IMWRITE_JPEG_QUALITY),30])
 
         # print(frame)
         #cv2.imshow('Camera Feed', frame)
