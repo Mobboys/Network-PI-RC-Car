@@ -118,7 +118,7 @@ def main():
 
     while True:
         send_gamepad_data(serverAddress, joy, UDPClient)
-        # receive_image_data(UDPClient, bufferSize)
+        receive_image_data(UDPClient, bufferSize)
 
 
 if __name__ == '__main__':

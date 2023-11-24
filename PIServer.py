@@ -23,6 +23,7 @@ def motorControl(controllerInputs, lastAngle, servo1):
     if lastAngle != angle:
         print(angle)
         servo1.ChangeDutyCycle(2+(angle/18))
+        lastAngle = angle
         return angle
 
 
