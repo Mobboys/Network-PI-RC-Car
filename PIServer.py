@@ -56,6 +56,7 @@ def main():
     print ('Server Ready...')
     while True:
         controllerInputs, address = receive(RPIsocket, bufferSize)
+        print("here???")
         send(address, RPIsocket, cap)
         print("hello?")
         lastAngle = motorControl(controllerInputs, lastAngle, servo1)
