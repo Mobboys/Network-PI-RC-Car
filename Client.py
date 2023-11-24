@@ -96,18 +96,30 @@ class XboxController(object):
                         self.DownDPad = event.state
 
 
-serverAddress = ('rc-receiver-udp.at.remote.it', 33001)
-bufferSize = 1024
-
-UDPClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-joy = XboxController()
-while True:
+def send_gamepad_data(serverAddress, joy, UDPClient):
     x, y, x2, y2, a, b, rb = joy.read()
     x = round(x * 35 + 95, 1)
     data = str('{},{},{},{},{}').format(x, y, x2, y2, rb).encode('utf-8')
     UDPClient.sendto(data, serverAddress)
-    frameENC, address = UDPClient.recvfrom(bufferSize)
+    print(data)
+
+
+def receive_image_data(UDPClient, bufferSize):
+    frameENC, _ = UDPClient.recvfrom(bufferSize)
     frame = pickle.loads(frameENC)
     cv2.imshow('Camera Feed', frame)
-    print(data)
-    time.sleep(.05)
+
+
+def main():
+    serverAddress = ('rc-receiver-udp.at.remote.it', 33001)
+    bufferSize = 1024
+    UDPClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    joy = XboxController()
+
+    while True:
+        send_gamepad_data(serverAddress, joy, UDPClient)
+        # receive_image_data(UDPClient, bufferSize)
+
+
+if __name__ == '__main__':
+    main()
