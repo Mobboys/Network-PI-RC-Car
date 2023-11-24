@@ -55,6 +55,7 @@ def main():
 
     print ('Server Ready...')
     while True:
+        print("wtf?")
         controllerInputs, address = receive(RPIsocket, bufferSize)
         print("here???")
         send(address, RPIsocket, cap)
