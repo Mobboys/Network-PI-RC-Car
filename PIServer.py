@@ -57,8 +57,10 @@ def main():
     
     with MLSocket() as s:
         s.bind((serverIP, serverPort))
+        print('Server starting....')
         s.listen()
         conn, address = s.accept()
+        print('Connected!')
         
         while True:
             controllerInputs = receive(conn, bufferSize)

@@ -7,7 +7,7 @@ import cv2
 import pickle
 import sys
 import numpy as np
-import mlsocket as MLSocket
+from mlsocket import MLSocket
 
 
 class XboxController(object):
@@ -98,7 +98,7 @@ class XboxController(object):
                         self.DownDPad = event.state
 
 
-def send_gamepad_data(serverAddress, joy, s):
+def send_gamepad_data(joy, s):
     x, y, x2, y2, a, b, rb = joy.read()
     x = round(x * 35 + 95, 1)
     data = str('{},{},{},{},{}').format(x, y, x2, y2, rb).encode('utf-8')
@@ -113,14 +113,17 @@ def receive_image_data(s, bufferSize):
 
 
 def main():
-    serverAddress, port = ('rc-receiver-udp.at.remote.it', 33001)
+    connection = ('rc-receiver-udp.at.remote.it', 33001)
     bufferSize = 1024
     #UDPClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    print('Client Connecting...')
     s = MLSocket()
+    s.connect(connection)
+    print('Connected!')
     joy = XboxController()
 
     while True:
-        send_gamepad_data(serverAddress, joy, s)
+        send_gamepad_data(joy, s)
         receive_image_data(s, bufferSize)
 
 
