@@ -106,20 +106,21 @@ def send_gamepad_data(serverAddress, joy, s):
 
 
 def receive_image_data(s, bufferSize):
-    data_received = b""
-    long_received = 0
-    while long_received < 4:
-        data_received += s.recv(4-long_received)
-        long_received = len(data_received)
+    z = ''
+    while True:
+        data = s.recv(bufferSize)
+        print(data)
+        if not data : break
+        z += pickle.loads(data)
     #Frame = int.from_bytes(data_received, byteorder='big') 
-    print(data_received)
+    print(z)
     #cv2.imshow('Camera Feed', Frame)
 
 
 
 def main():
     serverAddress = ('rc-receiver-udp.at.remote.it', 33001)
-    bufferSize = 1024
+    bufferSize = 40
     joy = XboxController()
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
