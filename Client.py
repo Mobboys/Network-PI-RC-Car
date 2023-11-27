@@ -97,33 +97,38 @@ class XboxController(object):
                         self.DownDPad = event.state
 
 
-def send_gamepad_data(serverAddress, joy, UDPClient):
+def send_gamepad_data(serverAddress, joy, s):
     x, y, x2, y2, a, b, rb = joy.read()
     x = round(x * 35 + 95, 1)
     data = str('{},{},{},{},{}').format(x, y, x2, y2, rb).encode('utf-8')
-    UDPClient.send(data)
+    s.send(data)
     #print(data)
 
 
-def receive_image_data(UDPClient, bufferSize):
+def receive_image_data(s, bufferSize):
     totalFrame = ''
-    #while True:
-    frameENC, _ = UDPClient.recv(bufferSize)
-    frame = pickle.loads(frameENC)
-    cv2.imshow('Camera Feed', frame)
+    while True:
+            data = s.recv(bufferSize)
+            totalFrame += pickle.loads(data)
+            if not data:
+                break
+
+    cv2.imshow('Camera Feed', totalFrame)
 
 
 
 def main():
     serverAddress = ('rc-receiver-udp.at.remote.it', 33001)
     bufferSize = 1024
-    UDPClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    UDPClient.setsockopt(socket.SOL_SOCKET,socket.SO_SNDBUF,1000000)
     joy = XboxController()
 
-    while True:
-        send_gamepad_data(serverAddress, joy, UDPClient)
-        receive_image_data(UDPClient, bufferSize)  # uh oh he too big
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect(serverAddress)
+        s.sendall(b"Hello, world")
+
+        while True:
+            send_gamepad_data(serverAddress, joy, s)
+            receive_image_data(s, bufferSize)  # uh oh he too big
 
 
 if __name__ == '__main__':
