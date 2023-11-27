@@ -106,14 +106,14 @@ def send_gamepad_data(serverAddress, joy, s):
 
 
 def receive_image_data(s, bufferSize):
-    totalFrame = ''
-    while True:
-            data = s.recv(bufferSize)
-            totalFrame += pickle.loads(data)
-            if not data:
-                break
+    data_received = b""
+    long_received = 0
+    while long_received < 4:
+        data_received += s.recv(4-long_received)
+        long_received = len(data_received)
+    Frame = str.from_bytes(data_received, byteorder='big') 
 
-    cv2.imshow('Camera Feed', totalFrame)
+    cv2.imshow('Camera Feed', Frame)
 
 
 
