@@ -106,14 +106,15 @@ def send_gamepad_data(serverAddress, joy, s):
 
 
 def receive_image_data(s, bufferSize):
-    z = ''
+    data = []
     while True:
-        data = s.recv(bufferSize)
-        print(data)
-        if not data : break
-        z += pickle.loads(data)
+        packet = s.recv(4096)
+        if not packet: break
+        data.append(packet)
+    data_arr = pickle.loads(b"".join(data))
+
     #Frame = int.from_bytes(data_received, byteorder='big') 
-    print(z)
+    print(data_arr)
     #cv2.imshow('Camera Feed', Frame)
 
 
