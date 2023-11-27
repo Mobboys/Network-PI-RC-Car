@@ -115,7 +115,7 @@ def receive_image_data(s, bufferSize):
 
     #Frame = int.from_bytes(data_received, byteorder='big') 
     print(data_arr)
-    #cv2.imshow('Camera Feed', Frame)
+    cv2.imshow('Camera Feed', data_arr)
 
 
 
@@ -127,9 +127,9 @@ def main():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect(('192.168.0.99', 5000))
 
-        #while True:
+        while True:
         #send_gamepad_data(serverAddress, joy, s)
-        receive_image_data(s, bufferSize)  # uh oh he too big
+            receive_image_data(s, bufferSize)  # uh oh he too big
 
 
 if __name__ == '__main__':

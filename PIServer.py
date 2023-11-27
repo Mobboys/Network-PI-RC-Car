@@ -59,10 +59,10 @@ def main():
 
         print(f"Connected by {addr}")
         
-        #while True:
+        while True:
             #controllerInputs = receive(conn, bufferSize)
             #lastAngle = motorControl(controllerInputs, lastAngle, servo1)
-        send(conn, cap)  # uh oh he too big
+            send(conn, cap)  # uh oh he too big
     s.close()
 
 
