@@ -16,6 +16,7 @@ def send(conn, cap):
     _, frame = cap.read()
     _, buffer = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 30])
     serialized = pickle.dumps(buffer)
+    print(frame)
     conn.sendall(serialized)
 
 
@@ -58,10 +59,10 @@ def main():
 
         print(f"Connected by {addr}")
         
-        while True:
-            controllerInputs = receive(conn, bufferSize)
-            lastAngle = motorControl(controllerInputs, lastAngle, servo1)
-            send(conn, cap)  # uh oh he too big
+        #while True:
+            #controllerInputs = receive(conn, bufferSize)
+            #lastAngle = motorControl(controllerInputs, lastAngle, servo1)
+        send(conn, cap)  # uh oh he too big
 
 
 if __name__ == "__main__":

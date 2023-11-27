@@ -111,9 +111,9 @@ def receive_image_data(s, bufferSize):
     while long_received < 4:
         data_received += s.recv(4-long_received)
         long_received = len(data_received)
-    Frame = str.from_bytes(data_received, byteorder='big') 
-
-    cv2.imshow('Camera Feed', Frame)
+    #Frame = int.from_bytes(data_received, byteorder='big') 
+    print(data_received)
+    #cv2.imshow('Camera Feed', Frame)
 
 
 
@@ -123,11 +123,11 @@ def main():
     joy = XboxController()
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect(serverAddress)
+        s.connect(('192.168.0.99', 5000))
 
-        while True:
-            send_gamepad_data(serverAddress, joy, s)
-            receive_image_data(s, bufferSize)  # uh oh he too big
+        #while True:
+        #send_gamepad_data(serverAddress, joy, s)
+        receive_image_data(s, bufferSize)  # uh oh he too big
 
 
 if __name__ == '__main__':
