@@ -124,7 +124,6 @@ def main():
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect(serverAddress)
-        s.sendall(b"Hello, world")
 
         while True:
             send_gamepad_data(serverAddress, joy, s)

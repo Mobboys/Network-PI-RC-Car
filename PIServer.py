@@ -6,17 +6,17 @@ import pickle
 
 
 def receive(conn, bufferSize):
-    data, address = conn.recv(bufferSize)
+    data = conn.recv(bufferSize)
     data = data.decode('utf-8')
     controllerInputs = [float(x) for x in data.split(',')]
-    return controllerInputs, address
+    return controllerInputs
 
 
-def send(address, conn, cap):
+def send(conn, cap):
     _, frame = cap.read()
     _, buffer = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 30])
     serialized = pickle.dumps(buffer)
-    conn.send(serialized)
+    conn.sendall(serialized)
 
 
 def motorControl(controllerInputs, lastAngle, servo1):
@@ -52,15 +52,16 @@ def main():
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind((serverIP, serverPort))
+        print ('Server Ready...')
         s.listen()
         conn, addr = s.accept()
 
-        print ('Server Ready...')
+        print(f"Connected by {addr}")
         
         while True:
-            controllerInputs, address = receive(conn, bufferSize)
+            controllerInputs = receive(conn, bufferSize)
             lastAngle = motorControl(controllerInputs, lastAngle, servo1)
-            send(address, conn, cap)  # uh oh he too big
+            send(conn, cap)  # uh oh he too big
 
 
 if __name__ == "__main__":
