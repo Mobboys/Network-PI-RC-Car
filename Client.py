@@ -108,13 +108,13 @@ def send_gamepad_data(serverAddress, joy, s):
 def receive_image_data(s, bufferSize):
     data = []
     x = 0
-    while x < 10:
-        packet = s.recv(bufferSize)
-        if not packet: break
-        data.append(packet)
-        print(data)
-        x += 1
-    data_arr = pickle.loads(b"".join(data))
+    #while x < 10:
+    packet = s.recv(bufferSize)
+    #    if not packet: break
+    #    data.append(packet)
+    #    x += 1
+    print(packet)
+    data_arr = pickle.loads(packet)
  
     print(data_arr)
     cv2.imshow('Camera Feed', data_arr)
@@ -129,9 +129,9 @@ def main():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect(('192.168.0.99', 5000))
 
-        while True:
+        #hile True:
         #send_gamepad_data(serverAddress, joy, s)
-            receive_image_data(s, bufferSize)  # uh oh he too big
+        receive_image_data(s, bufferSize)  # uh oh he too big
 
 
 if __name__ == '__main__':
