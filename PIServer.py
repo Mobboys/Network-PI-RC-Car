@@ -50,17 +50,17 @@ def main():
     serverIP = '192.168.0.99'
 
 
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.bind((serverIP, serverPort))
-    s.listen()
-    conn, addr = s.accept()
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind((serverIP, serverPort))
+        s.listen()
+        conn, addr = s.accept()
 
-    print ('Server Ready...')
-    
-    while True:
-        controllerInputs, address = receive(conn, bufferSize)
-        lastAngle = motorControl(controllerInputs, lastAngle, servo1)
-        send(address, conn, cap)  # uh oh he too big
+        print ('Server Ready...')
+        
+        while True:
+            controllerInputs, address = receive(conn, bufferSize)
+            lastAngle = motorControl(controllerInputs, lastAngle, servo1)
+            send(address, conn, cap)  # uh oh he too big
 
 
 if __name__ == "__main__":
