@@ -53,7 +53,7 @@ def main():
     RPIsocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     RPIsocket.setsockopt(socket.SOL_SOCKET,socket.SO_SNDBUF,1000000)
     RPIsocket.bind((serverIP, serverPort))
-    RPIsocket.listen(1)
+    RPIsocket.listen(0)
     conn, addr = RPIsocket.accept()
 
     print ('Server Ready...')
