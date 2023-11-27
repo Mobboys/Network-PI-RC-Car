@@ -50,11 +50,10 @@ def main():
     serverIP = '192.168.0.99'
 
 
-    RPIsocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    RPIsocket.setsockopt(socket.SOL_SOCKET,socket.SO_SNDBUF,1000000)
-    RPIsocket.bind((serverIP, serverPort))
-    RPIsocket.listen(0)
-    conn, addr = RPIsocket.accept()
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.bind((serverIP, serverPort))
+    s.listen()
+    conn, addr = s.accept()
 
     print ('Server Ready...')
     
