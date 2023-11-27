@@ -107,10 +107,13 @@ def send_gamepad_data(serverAddress, joy, s):
 
 def receive_image_data(s, bufferSize):
     data = []
-    while True:
+    x = 0
+    while x < 10:
         packet = s.recv(bufferSize)
         if not packet: break
         data.append(packet)
+        print(data)
+        x += 1
     data_arr = pickle.loads(b"".join(data))
  
     print(data_arr)
