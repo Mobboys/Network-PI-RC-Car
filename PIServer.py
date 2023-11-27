@@ -62,7 +62,7 @@ def main():
             #controllerInputs = receive(conn, bufferSize)
             #lastAngle = motorControl(controllerInputs, lastAngle, servo1)
             send(conn, cap)  # uh oh he too big
-            time.sleep(.01)
+            time.sleep(1)
     s.close()
 
 
