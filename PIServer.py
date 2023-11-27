@@ -63,6 +63,7 @@ def main():
             #controllerInputs = receive(conn, bufferSize)
             #lastAngle = motorControl(controllerInputs, lastAngle, servo1)
         send(conn, cap)  # uh oh he too big
+    s.close()
 
 
 if __name__ == "__main__":
