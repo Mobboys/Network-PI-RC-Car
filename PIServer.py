@@ -55,7 +55,7 @@ def main():
         s.bind((serverIP, serverPort))
         print ('Server Ready...')
         s.listen(1)
-        conn, addr = s.accept()
+        conn, addr = s.accept(1)
 
         print(f"Connected by {addr}")
         
