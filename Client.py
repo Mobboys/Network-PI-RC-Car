@@ -113,13 +113,15 @@ def receive_image_data(UDPClient, bufferSize):
 
 def main():
     serverAddress = ('rc-receiver-udp.at.remote.it', 33000)
-    bufferSize = 1024
-    UDPClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    bufferSize = 40
     joy = XboxController()
 
-    while True:
-        send_gamepad_data(joy, s)
-        receive_image_data(s, bufferSize)
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect(('192.168.0.99', 5000))
+
+        while True:
+            #send_gamepad_data(serverAddress, joy, s)
+            receive_image_data(s, bufferSize)  # uh oh he too big
 
 
 if __name__ == '__main__':
