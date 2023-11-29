@@ -14,11 +14,10 @@ def receive(conn, bufferSize):
 
 def send(conn, cap):
     _, frame = cap.read()
-    send = frame.encode('utf-8')
-    #_, buffer = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 30])
-    #serialized = pickle.dumps(buffer)
-    print(send)
-    conn.send(send)
+    _, buffer = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 30])
+    serialized = pickle.dumps(buffer)
+    print(serialized)
+    conn.send(serialized)
 
 
 def motorControl(controllerInputs, lastAngle, servo1):
