@@ -55,16 +55,14 @@ def main():
         s.bind((serverIP, serverPort))
         print ('Server Ready...')
         s.listen(1)
-        conn, addr = s.accept(1)
+        conn = s.accept()
 
-        print(f"Connected by {addr}")
+        print(f"Connected by ")
         
         while True:
             #controllerInputs = receive(conn, bufferSize)
             #lastAngle = motorControl(controllerInputs, lastAngle, servo1)
             send(conn, cap)  # uh oh he too big
-            
-    s.close()
 
 
 if __name__ == "__main__":
