@@ -117,7 +117,11 @@ def main():
     joy = XboxController()
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect(('192.168.0.99', 5000))
+        try:
+            s.connect((socket.gethostname(), 8888))
+        except socket.error as e:
+            print(str(e))
+            print(socket.gethostname())
 
         while True:
             #send_gamepad_data(serverAddress, joy, s)
