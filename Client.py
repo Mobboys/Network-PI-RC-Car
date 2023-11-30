@@ -117,7 +117,7 @@ def main():
     joy = XboxController()
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect(('rc-receiver-udp.at.remote.it', 33001))
+        s.connect(('192.168.0.99', 5000))
 
         while True:
             #send_gamepad_data(serverAddress, joy, s)

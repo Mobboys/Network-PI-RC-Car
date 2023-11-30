@@ -49,15 +49,16 @@ def main():
     bufferSize = 1024
     serverPort = 5000
     serverIP = '192.168.0.99'
+    host = socket.gethostname()
 
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.bind((serverIP, serverPort))
+        s.bind((host, serverPort))
         print ('Server Ready...')
         s.listen(1)
-        conn = s.accept()
+        conn, addr = s.accept()
 
-        print(f"Connected by ")
+        print(f"Connected by {addr}")
         
         while True:
             #controllerInputs = receive(conn, bufferSize)
