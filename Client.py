@@ -118,10 +118,11 @@ def main():
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         try:
-            s.connect((socket.gethostname(), 8888))
+            s.connect(('192.168.0.99', 8888))
         except socket.error as e:
             print(str(e))
             print(socket.gethostname())
+        s.connect(('192.168.0.99', 8888))
 
         while True:
             #send_gamepad_data(serverAddress, joy, s)
