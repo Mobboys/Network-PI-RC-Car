@@ -97,19 +97,19 @@ class XboxController(object):
                         self.DownDPad = event.state
 
 
-def send_gamepad_data(serverAddress, joy, UDPClient):
+def send_gamepad_data(serverAddress, joy, s):
     x, y, x2, y2, a, b, rb = joy.read()
     x = round(x * 35 + 95, 1)
     data = str('{},{},{},{},{}').format(x, y, x2, y2, rb).encode('utf-8')
-    UDPClient.sendto(data, serverAddress)
+    s.sendall(data)
     #print(data)
 
 
-def receive_image_data(UDPClient, bufferSize):
-    data = UDPClient.recv(bufferSize)
-    Frame = pickle.loads(data) #pickle data was truncated
-    print(data)
-    cv2.imshow('Camera Feed', Frame)
+def receive_image_data(s, bufferSize):
+    data = s.recv(bufferSize)
+    #Frame = pickle.loads(data) #pickle data was truncated
+    #print(data)
+    cv2.imshow('Camera Feed', data)
 
 
 
@@ -118,16 +118,16 @@ def main():
     bufferSize = 1000000
     joy = XboxController()
 
-    UDPClient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    #with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:   #not working, kept saying client refused connection when using remote.it
-    #    s.connect(serverAddress)
-    #    s.sendall(b"Hello, world")
+    #UDPClient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:#not working, kept saying client refused connection when using remote.it
+        s.connect(serverAddress)
 
-    while True:
-        send_gamepad_data(serverAddress, joy, UDPClient)
-        receive_image_data(UDPClient, bufferSize)  # uh oh he too big
-        if cv2.waitKey(1) == ord('q'):
-            break
+
+        while True:
+            send_gamepad_data(serverAddress, joy, s)
+            receive_image_data(s, bufferSize)  # uh oh he too big
+            if cv2.waitKey(1) == ord('q'):
+                break
 
 
 if __name__ == '__main__':

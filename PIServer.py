@@ -5,18 +5,18 @@ import cv2
 import pickle
 
 
-def receive(RPIsocket, bufferSize):
-    data, address = RPIsocket.recvfrom(bufferSize)
+def receive(s, bufferSize):
+    data, address = s.recv(bufferSize)
     data = data.decode('utf-8')
     controllerInputs = [float(x) for x in data.split(',')]
     return controllerInputs, address
 
 
-def send(address, RPIsocket, cap):
+def send(address, s, cap):
     _, frame = cap.read()
-    serialized = pickle.dumps(frame)
-    print (serialized)
-    RPIsocket.sendto(serialized, address) #OSError: [Errno 90] Message too long
+    #serialized = pickle.dumps(frame)
+    #print (serialized)
+    s.sendall(frame) #OSError: [Errno 90] Message too long
 
 
 def motorControl(controllerInputs, lastAngle, servo1):
@@ -50,16 +50,21 @@ def main():
     serverIP = '192.168.0.99'
 
 
-    RPIsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    RPIsocket.bind((serverIP, serverPort))
-    
-    print ('Server Ready...')
-    time.sleep(10)
-    
-    while True:
-        controllerInputs, address = receive(RPIsocket, bufferSize)
-        lastAngle = motorControl(controllerInputs, lastAngle, servo1)
-        send(address, RPIsocket, cap)  # uh oh he too big
+    #RPIsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #RPIsocket.bind((serverIP, serverPort))
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind((serverIP, serverPort))
+        s.listen(1)
+        print ('Server Ready...')
+        conn, addr = s.accept()
+
+        with conn:
+            print('Connected by', addr)
+            
+            while True:
+                controllerInputs, address = receive(s, bufferSize)
+                lastAngle = motorControl(controllerInputs, lastAngle, servo1)
+                send(address, s, cap)  # uh oh he too big
 
 
 if __name__ == "__main__":
