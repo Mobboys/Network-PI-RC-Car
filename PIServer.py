@@ -14,9 +14,9 @@ def receive(s, bufferSize):
 
 def send(address, s, cap):
     _, frame = cap.read()
-    #serialized = pickle.dumps(frame)
+    serialized = pickle.dumps(frame)
     #print (serialized)
-    s.sendall(frame) #OSError: [Errno 90] Message too long
+    s.sendall(serialized) #OSError: [Errno 90] Message too long  <-   I only get this error when it uses RPIsocket
 
 
 def motorControl(controllerInputs, lastAngle, servo1):
@@ -50,7 +50,7 @@ def main():
     serverIP = '192.168.0.99'
 
 
-    #RPIsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #RPIsocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     #RPIsocket.bind((serverIP, serverPort))
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind((serverIP, serverPort))
