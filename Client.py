@@ -107,11 +107,9 @@ def send_gamepad_data(serverAddress, joy, UDPClient):
 
 def receive_image_data(UDPClient, bufferSize):
     data = UDPClient.recv(bufferSize)
-    Frame = pickle.loads(data)                 #"trunkated"
+    Frame = pickle.loads(data) #pickle data was truncated
     print(data)
     cv2.imshow('Camera Feed', Frame)
-    if cv2.waitKey(1) == ord('q'):
-        ...
 
 
 
@@ -120,14 +118,16 @@ def main():
     bufferSize = 1000000
     joy = XboxController()
 
-    UDPClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    #with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:   not working, kept saying client refused connection when using remote.it
+    UDPClient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:   #not working, kept saying client refused connection when using remote.it
     #    s.connect(serverAddress)
     #    s.sendall(b"Hello, world")
 
     while True:
         send_gamepad_data(serverAddress, joy, UDPClient)
         receive_image_data(UDPClient, bufferSize)  # uh oh he too big
+        if cv2.waitKey(1) == ord('q'):
+            break
 
 
 if __name__ == '__main__':

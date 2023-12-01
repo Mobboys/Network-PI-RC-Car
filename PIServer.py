@@ -16,7 +16,7 @@ def send(address, RPIsocket, cap):
     _, frame = cap.read()
     serialized = pickle.dumps(frame)
     print (serialized)
-    RPIsocket.sendto(serialized, address)
+    RPIsocket.sendto(serialized, address) #OSError: [Errno 90] Message too long
 
 
 def motorControl(controllerInputs, lastAngle, servo1):
@@ -50,7 +50,7 @@ def main():
     serverIP = '192.168.0.99'
 
 
-    RPIsocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    RPIsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     RPIsocket.bind((serverIP, serverPort))
     
     print ('Server Ready...')
