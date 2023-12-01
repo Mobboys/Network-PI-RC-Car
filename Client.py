@@ -5,7 +5,8 @@ import math
 import threading
 import cv2
 import pickle
-import sys
+import base64
+import numpy as np
 
 
 # C:\Users\vance\PycharmProjects\RC_Client\venv\Scripts\python.exe
@@ -107,7 +108,9 @@ def send_gamepad_data(serverAddress, joy, UDPClient):
 
 def receive_image_data(UDPClient, bufferSize):
     data = UDPClient.recv(bufferSize)
-    Frame = data.decode()                 #"trunkated"
+    r = base64.decodebytes(data)
+    Frame = np.frombuffer(r, dtype=np.float64)
+    #Frame = data.decode()                 
     print(data)
     cv2.imshow('Camera Feed', Frame)
 
