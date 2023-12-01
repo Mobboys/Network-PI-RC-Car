@@ -106,16 +106,16 @@ def send_gamepad_data(serverAddress, joy, UDPClient):
 
 
 def receive_image_data(UDPClient, bufferSize):
-    data = UDPClient.recvfrom(bufferSize)
-    #Frame = pickle.loads(data)                 "trunkated"
+    data = UDPClient.recv(bufferSize)
+    Frame = pickle.loads(data)                 #"trunkated"
     print(data)
-    cv2.imshow('Camera Feed', data)
+    cv2.imshow('Camera Feed', Frame)
 
 
 
 def main():
     serverAddress = ('192.168.0.99', 5000)#('rc-receiver-udp.at.remote.it', 33001)
-    bufferSize = 1024
+    bufferSize = 1_000_000
     joy = XboxController()
 
     UDPClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
