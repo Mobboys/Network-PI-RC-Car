@@ -107,7 +107,7 @@ def send_gamepad_data(serverAddress, joy, UDPClient):
 
 def receive_image_data(UDPClient, bufferSize):
     data = UDPClient.recv(bufferSize)
-    Frame = pickle.loads(data)                 #"trunkated"
+    Frame = data.decode()                 #"trunkated"
     print(data)
     cv2.imshow('Camera Feed', Frame)
 
