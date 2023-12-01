@@ -114,7 +114,7 @@ def receive_image_data(UDPClient, bufferSize):
 
 
 def main():
-    serverAddress = ('192.168.0.99', 5000)#('rc-receiver-udp.at.remote.it', 33001)
+    serverAddress = ('rc-receiver-udp.at.remote.it', 33001) #('192.168.0.99', 5000)
     bufferSize = 1_000_000
     joy = XboxController()
 
