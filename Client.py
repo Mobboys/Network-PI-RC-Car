@@ -106,7 +106,7 @@ def send_gamepad_data(serverAddress, joy, s):
 
 
 def receive_image_data(s, bufferSize):
-    data = s.recv(bufferSize)
+    data = s.recv(bufferSize)                   #Latest Error - ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
     Frame = pickle.loads(data) #pickle data was truncated
     #print(data)
     cv2.imshow('Camera Feed', Frame)
