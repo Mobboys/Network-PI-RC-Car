@@ -54,6 +54,7 @@ def main():
     RPIsocket.bind((serverIP, serverPort))
     
     print ('Server Ready...')
+    time.sleep(10)
     
     while True:
         controllerInputs, address = receive(RPIsocket, bufferSize)
