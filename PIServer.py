@@ -3,8 +3,6 @@ import RPi.GPIO as GPIO
 import time
 import cv2
 import pickle
-import base64
-import numpy as np
 
 
 def receive(RPIsocket, bufferSize):
@@ -16,8 +14,8 @@ def receive(RPIsocket, bufferSize):
 
 def send(address, RPIsocket, cap):
     _, frame = cap.read()
-    #serialized = frame.encode()
-    serialized = base64.b64encode(frame)
+    serialized = pickle.dumps(frame)
+    print (serialized)
     RPIsocket.sendto(serialized, address)
 
 

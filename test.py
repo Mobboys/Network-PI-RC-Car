@@ -10,25 +10,26 @@ FRAME_HEIGHT = 1080 // 2
 def main():
 
     t = np.arange(3, dtype=np.float64)
-    print(t)
     s = base64.b64encode(t)
-    print(s)
     r = base64.decodebytes(s)
     q = np.frombuffer(r, dtype=np.float64)
-    print(q)
 
     print(np.allclose(q, t))
 
-    #cap = cv2.VideoCapture(0)
-    #cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
-    #cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
+    cap = cv2.VideoCapture(0)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
 
-    #while True:
-    #    _, frame = cap.read()
-    #    #_, buffer = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 30])
-    #    serialized = pickle.dumps(frame)
-    #    Frame = pickle.loads(serialized)                 #"trunkated"
-    #    cv2.imshow('Camera Feed', frame)
+    while True:
+        _, frame = cap.read()
+        #_, buffer = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 30])
+        #serialized = pickle.dumps(frame)
+        #Frame = pickle.loads(serialized)                 #"trunkated"
+        s = base64.b64encode(frame)
+        r = base64.decodebytes(s)
+        q = np.frombuffer(r, dtype=np.float64)
+        print(len(q))
+        cv2.imshow('Camera Feed', frame)
     
         # serialize and deserialize
         # serialized = pickle.dumps(frame)
@@ -39,8 +40,8 @@ def main():
         # print(frame)
         #cv2.imshow('Camera Feed', frame)
         
-    #    if cv2.waitKey(1) == ord('q'):
-    #        break
+        if cv2.waitKey(1) == ord('q'):
+            break
 
     #cap.release()
     #cv2.destroyAllWindows()

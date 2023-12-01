@@ -5,8 +5,7 @@ import math
 import threading
 import cv2
 import pickle
-import base64
-import numpy as np
+import sys
 
 
 # C:\Users\vance\PycharmProjects\RC_Client\venv\Scripts\python.exe
@@ -108,17 +107,17 @@ def send_gamepad_data(serverAddress, joy, UDPClient):
 
 def receive_image_data(UDPClient, bufferSize):
     data = UDPClient.recv(bufferSize)
-    r = base64.decodebytes(data)
-    Frame = np.frombuffer(r, dtype=np.float64)
-    #Frame = data.decode()                 
+    Frame = pickle.loads(data)                 #"trunkated"
     print(data)
     cv2.imshow('Camera Feed', Frame)
+    if cv2.waitKey(1) == ord('q'):
+        ...
 
 
 
 def main():
-    serverAddress = ('rc-receiver-udp.at.remote.it', 33001) #('192.168.0.99', 5000)
-    bufferSize = 1_000_000
+    serverAddress = ('192.168.0.99', 5000)#('rc-receiver-udp.at.remote.it', 33001)
+    bufferSize = 1000000
     joy = XboxController()
 
     UDPClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
