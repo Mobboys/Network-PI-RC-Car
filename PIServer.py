@@ -5,18 +5,18 @@ import cv2
 import pickle
 
 
-def receive(conn, bufferSize):
-    data, address = conn.recv(bufferSize)
+def receive(RPIsocket, bufferSize):
+    data, address = RPIsocket.recvfrom(bufferSize)
     data = data.decode('utf-8')
     controllerInputs = [float(x) for x in data.split(',')]
     return controllerInputs, address
 
 
-def send(address, conn, cap):
+def send(address, RPIsocket, cap):
     _, frame = cap.read()
     _, buffer = cv2.imencode(".jpg", frame, [int(cv2.IMWRITE_JPEG_QUALITY), 30])
     serialized = pickle.dumps(buffer)
-    conn.send(serialized)
+    RPIsocket.sendto(serialized, address)
 
 
 def motorControl(controllerInputs, lastAngle, servo1):
@@ -53,15 +53,13 @@ def main():
     RPIsocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     RPIsocket.setsockopt(socket.SOL_SOCKET,socket.SO_SNDBUF,1000000)
     RPIsocket.bind((serverIP, serverPort))
-    RPIsocket.listen(1)
-    conn, addr = RPIsocket.accept()
-
+    
     print ('Server Ready...')
     
     while True:
-        controllerInputs, address = receive(conn, bufferSize)
+        controllerInputs, address = receive(RPIsocket, bufferSize)
         lastAngle = motorControl(controllerInputs, lastAngle, servo1)
-        send(address, conn, cap)  # uh oh he too big
+        send(address, RPIsocket, cap)  # uh oh he too big
 
 
 if __name__ == "__main__":
