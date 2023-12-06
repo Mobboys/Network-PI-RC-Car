@@ -15,7 +15,7 @@ def receive(s, bufferSize):
 def send(address, s, cap):
     _, frame = cap.read()
     serialized = pickle.dumps("test")
-    #print (serialized)
+    print (serialized)
     s.sendall(serialized) #OSError: [Errno 90] Message too long  <-   I only get this error when it uses RPIsocket
 
 
