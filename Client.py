@@ -108,19 +108,20 @@ def send_gamepad_data(serverAddress, joy, s):
 def receive_image_data(s, bufferSize):
     data = s.recv(bufferSize)                   #Latest Error - ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
     Frame = pickle.loads(data) #pickle data was truncated
-    #print(data)
-    cv2.imshow('Camera Feed', Frame)
+    print(Frame)
+    #cv2.imshow('Camera Feed', Frame)
 
 
 
 def main():
     serverAddress = ('192.168.0.99', 5000)#('rc-receiver-udp.at.remote.it', 33001)
-    bufferSize = 1000000
+    bufferSize = 1024
     joy = XboxController()
 
     #UDPClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:#not working, kept saying client refused connection when using remote.it
         s.connect(serverAddress)
+        print("connected to", serverAddress)
 
 
         while True:
