@@ -6,7 +6,7 @@ import pickle
 
 
 def receive(s, bufferSize):
-    data, address = s.recv(bufferSize)              #Latest Error (Matching Client.py) - OSError: [Errno 107] Transport endpoint is not connected
+    data = s.recv(bufferSize)              #Latest Error (Matching Client.py) - OSError: [Errno 107] Transport endpoint is not connected
     data = data.decode('utf-8')
     controllerInputs = [float(x) for x in data.split(',')]
     return controllerInputs, address
