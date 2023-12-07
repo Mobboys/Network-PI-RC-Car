@@ -159,8 +159,9 @@ def new_main():
 
             new_msg = True
             full_msg = b''
+            break
 
-        print(full_msg)
+        #print(full_msg)
 
 
 if __name__ == '__main__':
