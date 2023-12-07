@@ -158,7 +158,7 @@ def new_main():
                 print("new frame")
 
                 d = pickle.loads(full_msg[header_size:])
-                cv2.imshow('Camera Feed', d)
+                #cv2.imshow('Camera Feed', d)
 
                 frame_launched = True
                 new_msg = True
@@ -168,10 +168,10 @@ def new_main():
                 start_time = time.time()
                 
 
-
             if frame_launched:
-                if cv2.waitKey(1) == ord('q'):
-                    break
+                cv2.imshow('Camera Feed', d)
+            if cv2.waitKey(1) == ord('q'):
+                break
                 
             #print(full_msg)
 
