@@ -91,7 +91,6 @@ def new_main():
     # _, frame = cap.read()
     # serialized = pickle.dumps(frame)
     # print(serialized)
-    s.send(msg) 
 
 
 if __name__ == "__main__":
