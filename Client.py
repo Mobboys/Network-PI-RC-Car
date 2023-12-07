@@ -164,7 +164,9 @@ def new_main():
                 new_msg = True
                 full_msg = b''
                 end_time = time.time()
-                break
+                print(end_time-start_time)
+                start_time = time.time()
+                
 
 
             if frame_launched:
@@ -172,7 +174,6 @@ def new_main():
                     break
                 
             #print(full_msg)
-        print(end_time-start_time)
 
 if __name__ == '__main__':
     new_main()
