@@ -142,6 +142,7 @@ def new_main():
     frame_launched = False
     full_msg = b''
     new_msg = True
+    start_time = time.time()
     while True:
         msg = s.recv(4096)
         if new_msg:
@@ -162,6 +163,8 @@ def new_main():
             frame_launched = True
             new_msg = True
             full_msg = b''
+            end_time = time.time()
+            break
 
 
         if frame_launched:
@@ -169,7 +172,7 @@ def new_main():
                 break
             
         #print(full_msg)
-
+    print(end_time-start_time)
 
 if __name__ == '__main__':
     new_main()
