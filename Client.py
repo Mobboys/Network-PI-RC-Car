@@ -142,7 +142,7 @@ def new_main():
         full_msg = b''
         new_msg = True
         while True:
-            msg = s.recv(16)
+            msg = s.recv(131072)
             if new_msg:
                 print(f'new message length: {msg[:header_size]}')
                 msglen = int(msg[:header_size])
