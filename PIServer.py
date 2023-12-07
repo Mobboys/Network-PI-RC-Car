@@ -80,13 +80,13 @@ def new_main():
     s.bind(('192.168.0.99', 5000))
     s.listen(5)
     clientsocket, address = s.accept()
+    print(f"Connection from {address} has been made!")
 
-    #while True:
-    print(f"COnnection from {address} has been made!")
-    msg = "testasfkhlahflksahdf"
-    msg = f'{len(msg):<{header_size}}' + msg
+    while True:
+        msg = "testasfkhlahflksahdf"
+        msg = f'{len(msg):<{header_size}}' + msg
 
-    clientsocket.send(bytes(msg, 'utf-8'))
+        clientsocket.send(bytes(msg, 'utf-8'))
     
     # _, frame = cap.read()
     # serialized = pickle.dumps(frame)
