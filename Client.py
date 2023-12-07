@@ -145,15 +145,16 @@ def new_main():
     while True:
         msg = s.recv(4096)
         if new_msg:
-            print(f'new message length: {msg[:header_size]}')
+            #print(f'new message length: {msg[:header_size]}')
             msglen = int(msg[:header_size])
             new_msg = False
 
         full_msg += msg
     
         if len(full_msg) - header_size == msglen:
-            print("full msg recvd")
+            #print("full msg recvd")
             #print(full_msg[header_size:])
+            print("new frame")
 
             d = pickle.loads(full_msg[header_size:])
             cv2.imshow('Camera Feed', d)
