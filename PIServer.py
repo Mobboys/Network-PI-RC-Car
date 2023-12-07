@@ -87,7 +87,7 @@ def new_main():
         msg = pickle.dumps(frame)
         msg = bytes(f'{len(msg):<{header_size}}', 'utf-8') + msg
 
-        clientsocket.send(msg)
+        clientsocket.sendall(msg)
 
         time.sleep(7)
 
