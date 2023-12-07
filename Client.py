@@ -139,6 +139,7 @@ def new_main():
     s.connect(('192.168.0.99', 5000))
     
     #while True:
+    frame_launched = False
     full_msg = b''
     new_msg = True
     while True:
@@ -157,10 +158,15 @@ def new_main():
             d = pickle.loads(full_msg[header_size:])
             cv2.imshow('Camera Feed', d)
 
+            frame_launched = True
             new_msg = True
             full_msg = b''
-            
 
+
+        if frame_launched:
+            if cv2.waitKey(1) == ord('q'):
+                break
+            
         #print(full_msg)
 
 
