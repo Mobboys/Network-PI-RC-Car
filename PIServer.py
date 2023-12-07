@@ -67,12 +67,12 @@ def main():
                 send(address, s, cap)  # uh oh he too big
 
 def new_main():
-    FRAME_WIDTH = 1920 // 1000
-    FRAME_HEIGHT = 1080 // 1000
+    FRAME_WIDTH = 1920 // 10000
+    FRAME_HEIGHT = 1080 // 10000
     VIDEO_DEVICE = 0
     cap = cv2.VideoCapture(VIDEO_DEVICE)
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
+    #cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
+    #cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
 
     header_size = 10
 
