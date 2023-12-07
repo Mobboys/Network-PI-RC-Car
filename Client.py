@@ -139,7 +139,7 @@ def new_main():
     s.connect(('192.168.0.99', 5000))
     
     while True:
-        full_msg = ''
+        full_msg = b''
         new_msg = True
         while True:
             msg = s.recv(16)
@@ -148,13 +148,17 @@ def new_main():
                 msglen = int(msg[:header_size])
                 new_msg = False
 
-            full_msg += msg.decode("utf-8")
+            full_msg += msg
         
             if len(full_msg) - header_size == msglen:
                 print("full msg recvd")
                 print(full_msg[header_size:])
+
+                d = pickle.loads(full_msg[header_size:])
+                print(d)
+
                 new_msg = True
-                full_msg = ''
+                full_msg = b''
 
         print(full_msg)
 

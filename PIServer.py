@@ -83,21 +83,13 @@ def new_main():
     print(f"Connection from {address} has been made!")
 
     while True:
-        msg = "testasfkhlahflksahdf"
-        msg = f'{len(msg):<{header_size}}' + msg
+        _, frame = cap.read()
+        msg = pickle.dumps(frame)
+        msg = bytes(f'{len(msg):<{header_size}}', 'utf-8') + msg
 
         clientsocket.send(bytes(msg, 'utf-8'))
 
-        while True:
-            time.sleep(1)
-            msg = f"The time is: {time.time()}"
-            msg = f'{len(msg):<{header_size}}' + msg
-
-            clientsocket.send(bytes(msg, 'utf-8'))
     
-    # _, frame = cap.read()
-    # serialized = pickle.dumps(frame)
-    # print(serialized)
 
 
 if __name__ == "__main__":
