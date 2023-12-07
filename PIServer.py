@@ -66,6 +66,33 @@ def main():
                 lastAngle = motorControl(controllerInputs, lastAngle, servo1)
                 send(address, s, cap)  # uh oh he too big
 
+def new_main():
+    FRAME_WIDTH = 1920 // 2
+    FRAME_HEIGHT = 1080 // 2
+    VIDEO_DEVICE = 0
+    cap = cv2.VideoCapture(VIDEO_DEVICE)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
+
+    header_size = 10
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind(('192.168.0.99', 5000))
+    s.listen(5)
+    clientsocket, address = s.accept()
+
+    #while True:
+    print(f"COnnection from {address} has been made!")
+    msg = "testasfkhlahflksahdf"
+    msg = f'{len(msg):<{header_size}}' + msg
+
+    clientsocket.send(bytes(msg, 'utf-8'))
+    
+    # _, frame = cap.read()
+    # serialized = pickle.dumps(frame)
+    # print(serialized)
+    s.send(msg) 
+
 
 if __name__ == "__main__":
-    main()
+    new_main()

@@ -132,6 +132,32 @@ def main():
                 break
             time.sleep(.01)
 
+def new_main():
+    header_size = 10
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect(('192.168.0.99', 5000))
+    
+    while True:
+        full_msg = ''
+        new_msg = True
+        while True:
+            msg = s.recv(1024)
+            if new_msg:
+                print(f'new message length: {msg[:header_size]}')
+                msglen = int(msg[:header_size])
+                new_msg = False
+
+            full_msg += msg.decode("utf-8")
+        
+            if len(full_msg) - header_size == msglen:
+                print("full msg recvd")
+                print(full_msg[header_size:])
+                new_msg = True
+                full_msg = ''
+
+        print(full_msg)
+
 
 if __name__ == '__main__':
-    main()
+    new_main()
