@@ -82,12 +82,12 @@ def new_main():
     clientsocket, address = s.accept()
     print(f"Connection from {address} has been made!")
 
-    #while True:
-    _, frame = cap.read()
-    msg = pickle.dumps(frame)
-    msg = bytes(f'{len(msg):<{header_size}}', 'utf-8') + msg
+    while True:
+        _, frame = cap.read()
+        msg = pickle.dumps(frame)
+        msg = bytes(f'{len(msg):<{header_size}}', 'utf-8') + msg
 
-    clientsocket.send(msg)
+        clientsocket.send(msg)
 
         #time.sleep(3)
 
