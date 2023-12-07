@@ -138,28 +138,28 @@ def new_main():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(('192.168.0.99', 5000))
     
-    #while True:
-    full_msg = b''
-    new_msg = True
     while True:
-        msg = s.recv(4096)
-        if new_msg:
-            print(f'new message length: {msg[:header_size]}')
-            msglen = int(msg[:header_size])
-            new_msg = False
+        full_msg = b''
+        new_msg = True
+        while True:
+            msg = s.recv(4096)
+            if new_msg:
+                print(f'new message length: {msg[:header_size]}')
+                msglen = int(msg[:header_size])
+                new_msg = False
 
-        full_msg += msg
-    
-        if len(full_msg) - header_size == msglen:
-            print("full msg recvd")
-            print(full_msg[header_size:])
+            full_msg += msg
+        
+            if len(full_msg) - header_size == msglen:
+                print("full msg recvd")
+                #print(full_msg[header_size:])
 
-            d = pickle.loads(full_msg[header_size:])
-            print(d)
+                d = pickle.loads(full_msg[header_size:])
+                cv2.imshow('Camera Feed', d)
 
-            new_msg = True
-            full_msg = b''
-            break
+                new_msg = True
+                full_msg = b''
+            
 
         #print(full_msg)
 
