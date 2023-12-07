@@ -8,7 +8,7 @@ import numpy as np
 FRAME_WIDTH = 1920 // 2
 FRAME_HEIGHT = 1080 // 2
 
-def main_camera():
+def main():
 
     t = np.arange(3, dtype=np.float64)
     s = base64.b64encode(t)
@@ -49,6 +49,7 @@ def main_camera():
 def main_socket():
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        ...
 
 if __name__ == '__main__':
     main()

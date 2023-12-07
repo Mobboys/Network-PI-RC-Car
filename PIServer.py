@@ -89,7 +89,7 @@ def new_main():
 
         clientsocket.send(msg)
 
-        time.sleep(4)
+        time.sleep(1)
 
     
 
