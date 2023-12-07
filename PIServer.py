@@ -71,6 +71,7 @@ def new_main():
     FRAME_HEIGHT = 1080 // 10000
     VIDEO_DEVICE = 0
     cap = cv2.VideoCapture(VIDEO_DEVICE)
+    cap.set(cv2.CAP_PROP_FPS, 5)
     #cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
     #cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
 
