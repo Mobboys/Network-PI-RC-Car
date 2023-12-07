@@ -87,6 +87,13 @@ def new_main():
         msg = f'{len(msg):<{header_size}}' + msg
 
         clientsocket.send(bytes(msg, 'utf-8'))
+
+        while True:
+            time.sleep(1)
+            msg = f"The time is: {time.time()}"
+            msg = f'{len(msg):<{header_size}}' + msg
+
+            clientsocket.send(bytes(msg, 'utf-8'))
     
     # _, frame = cap.read()
     # serialized = pickle.dumps(frame)
