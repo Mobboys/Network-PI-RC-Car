@@ -96,8 +96,8 @@ def new_main():
 def new_new_main():
         # Socket Create
     server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    host_name  = socket.gethostname()
-    host_ip = socket.gethostbyname(host_name)
+    #host_name  = socket.gethostname()
+    host_ip = '192.168.0.99'#socket.gethostbyname(host_name)
     print('HOST IP:',host_ip)
     port = 9999
     socket_address = (host_ip,port)

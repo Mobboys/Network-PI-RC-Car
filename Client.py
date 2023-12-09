@@ -179,7 +179,7 @@ def new_main():
 def new_new_main():
     # create socket
     client_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    host_ip = '192.168.1.20' # paste your server ip address here
+    host_ip = '192.168.0.99' # paste your server ip address here
     port = 9999
     client_socket.connect((host_ip,port)) # a tuple
     data = b""
