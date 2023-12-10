@@ -96,6 +96,8 @@ def new_main():
 def new_new_main():
         # Socket Create
     server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    FRAME_WIDTH = 1920 // 10000
+    FRAME_HEIGHT = 1080 // 10000
     #host_name  = socket.gethostname()
     host_ip = '192.168.0.99'#socket.gethostbyname(host_name)
     print('HOST IP:',host_ip)
@@ -116,6 +118,8 @@ def new_new_main():
     start_time = time.time()
     if client_socket:
         vid = cv2.VideoCapture(0)
+        vid.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
+        vid.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
         
         while(vid.isOpened()):
             img,frame = vid.read()

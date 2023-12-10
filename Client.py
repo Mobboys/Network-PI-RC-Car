@@ -183,29 +183,38 @@ def new_new_main():
     port = 5000
     client_socket.connect((host_ip,port)) # a tuple
     start_time = time.time()
+    T = 0
+    Tf = 0
     data = b""
     payload_size = struct.calcsize("Q")
-    #while True:
-    while len(data) < payload_size:
-        packet = client_socket.recv(4*1024) # 4K
-        end_time = time.time()
-        if not packet: break
-        data+=packet
-    packed_msg_size = data[:payload_size]
-    data = data[payload_size:]
-    msg_size = struct.unpack("Q",packed_msg_size)[0]
-    
-    while len(data) < msg_size:
-        data += client_socket.recv(4*1024)
-    frame_data = data[:msg_size]
-    data  = data[msg_size:]
-    frame = pickle.loads(frame_data)
-    cv2.imshow("RECEIVING VIDEO",frame)
-    key = cv2.waitKey(1) & 0xFF
-    #if key  == ord('q'):
-        #break
+    while True:
+        while len(data) < payload_size:
+            packet = client_socket.recv(4*1024) # 4K
+            end_time = time.time()
+            if not packet: break
+            data+=packet
+        if T == 0:
+            T = end_time-start_time 
+            print(T)
+        packed_msg_size = data[:payload_size]
+        data = data[payload_size:]
+        msg_size = struct.unpack("Q",packed_msg_size)[0]
+        
+        while len(data) < msg_size:
+            data += client_socket.recv(4*1024)
+        frame_data = data[:msg_size]
+        data  = data[msg_size:]
+        frame = pickle.loads(frame_data)
+        cv2.imshow("RECEIVING VIDEO",frame)
+        view = time.time()
+        if Tf == 0:
+            Tf = view-end_time
+            print(Tf)
+        key = cv2.waitKey(1) & 0xFF
+        if key  == ord('q'):
+            break
     client_socket.close()
-    print(start_time-end_time)
+    
 
 if __name__ == '__main__':
     new_new_main()
