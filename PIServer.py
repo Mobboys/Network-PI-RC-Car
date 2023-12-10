@@ -99,7 +99,7 @@ def new_new_main():
     #host_name  = socket.gethostname()
     host_ip = '192.168.0.99'#socket.gethostbyname(host_name)
     print('HOST IP:',host_ip)
-    port = 9999
+    port = 5000
     socket_address = (host_ip,port)
 
     # Socket Bind
@@ -110,17 +110,20 @@ def new_new_main():
     print("LISTENING AT:",socket_address)
 
     # Socket Accept
-    while True:
-        client_socket,addr = server_socket.accept()
-        print('GOT CONNECTION FROM:',addr)
-        if client_socket:
-            vid = cv2.VideoCapture(0)
-            
-            while(vid.isOpened()):
-                img,frame = vid.read()
-                a = pickle.dumps(frame)
-                message = struct.pack("Q",len(a))+a
-                client_socket.sendall(message)
+    #while True:
+    client_socket,addr = server_socket.accept()
+    print('GOT CONNECTION FROM:',addr)
+    start_time = time.time()
+    if client_socket:
+        vid = cv2.VideoCapture(0)
+        
+        while(vid.isOpened()):
+            img,frame = vid.read()
+            a = pickle.dumps(frame)
+            message = struct.pack("Q",len(a))+a
+            client_socket.sendall(message)
+            end_time = time.time()
+    print(start_time-end_time)
                 
 
 
