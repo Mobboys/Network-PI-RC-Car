@@ -123,7 +123,7 @@ def new_new_main():
             message = struct.pack("Q",len(a))+a
             client_socket.sendall(message)
             end_time = time.time()
-    print(start_time-end_time)
+            print(start_time-end_time)
                 
 
 
