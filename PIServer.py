@@ -115,7 +115,6 @@ def new_new_main():
     #while True:
     client_socket,addr = server_socket.accept()
     print('GOT CONNECTION FROM:',addr)
-    start_time = time.time()
     if client_socket:
         vid = cv2.VideoCapture(0)
         vid.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
@@ -126,8 +125,6 @@ def new_new_main():
             a = pickle.dumps(frame)
             message = struct.pack("Q",len(a))+a
             client_socket.sendall(message)
-            end_time = time.time()
-            print(start_time-end_time)
                 
 
 
