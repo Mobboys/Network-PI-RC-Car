@@ -95,7 +95,7 @@ def new_main():
 
 def new_new_main():
         # Socket Create
-    server_socket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+    server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     FRAME_WIDTH = 1920 // 10000
     FRAME_HEIGHT = 1080 // 10000
     #host_name  = socket.gethostname()

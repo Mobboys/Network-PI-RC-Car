@@ -178,9 +178,9 @@ def new_main():
 
 def new_new_main():
     # create socket
-    client_socket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+    client_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     host_ip = 'rc-receiver-udp.at.remote.it' #'192.168.0.99'
-    port = 33001 #5000
+    port = 33002 #5000
     client_socket.connect((host_ip,port)) # a tuple
     data = b""
     payload_size = struct.calcsize("Q")
