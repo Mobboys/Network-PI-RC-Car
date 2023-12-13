@@ -179,7 +179,7 @@ def new_main():
 def new_new_main():
     # create socket
     client_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    host_ip = 'rc-receiver-udp.at.remote.it' #'192.168.0.99'
+    host_ip = 'rc-receiver-tcp.at.remote.it' #'192.168.0.99' # '172.20.10.2'
     port = 33002 #5000
     client_socket.connect((host_ip,port)) # a tuple
     data = b""

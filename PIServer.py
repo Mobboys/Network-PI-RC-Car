@@ -99,7 +99,7 @@ def new_new_main():
     FRAME_WIDTH = 1920 // 10000
     FRAME_HEIGHT = 1080 // 10000
     #host_name  = socket.gethostname()
-    host_ip = '192.168.0.99'#socket.gethostbyname(host_name)
+    host_ip = '172.20.10.2' #'192.168.0.99' #socket.gethostbyname(host_name)
     print('HOST IP:',host_ip)
     port = 5000
     socket_address = (host_ip,port)
