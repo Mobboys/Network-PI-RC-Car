@@ -10,7 +10,7 @@ def receive(client_socket):
     data = client_socket.recv(2*1024)              #Latest Error (Matching Client.py) - OSError: [Errno 107] Transport endpoint is not connected
     data = data.decode('utf-8')
     controllerInputs = [x for x in data.split(',')]
-    print(len(controllerInputs),controllerInputs[0],controllerInputs[1],controllerInputs[2],controllerInputs[3],controllerInputs[4],controllerInputs[5], sep='\n', end='\n\n')
+    print(data,len(controllerInputs),controllerInputs[0],controllerInputs[1],controllerInputs[2],controllerInputs[3],controllerInputs[4],controllerInputs[5], sep='\n', end='\n\n')
     return controllerInputs
 
 
@@ -132,14 +132,14 @@ def new_new_main():
         vid.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
         vid.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
         
-        while(True): #vid.isOpened()
-            img,frame = vid.read()
-            a = pickle.dumps(frame)
-            message = struct.pack("Q",len(a))+a
-            # client_socket.sendall(message)
-            controllerInputs = receive(client_socket)
-            #lastAngle = motorControl(controllerInputs[0], lastAngle, servo1)
-            #lastSpeed = motorControl(controllerInputs[1], lastSpeed, motor)
+        #while(True): #vid.isOpened()
+        img,frame = vid.read()
+        a = pickle.dumps(frame)
+        message = struct.pack("Q",len(a))+a
+        # client_socket.sendall(message)
+        controllerInputs = receive(client_socket)
+        #lastAngle = motorControl(controllerInputs[0], lastAngle, servo1)
+        #lastSpeed = motorControl(controllerInputs[1], lastSpeed, motor)
 
 
 if __name__ == "__main__":
