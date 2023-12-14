@@ -10,7 +10,6 @@ def receive(client_socket):
     data = client_socket.recv(13)              #Latest Error (Matching Client.py) - OSError: [Errno 107] Transport endpoint is not connected
     data = data.decode('utf-8')
     controllerInputs = [float(x) for x in data.split(',')]
-    print(data,len(controllerInputs),controllerInputs, sep='\n', end='\n\n')
     return controllerInputs
 
 
@@ -132,14 +131,14 @@ def new_new_main():
         vid.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
         vid.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
         
-        #while(True): #vid.isOpened()
-        img,frame = vid.read()
-        a = pickle.dumps(frame)
-        message = struct.pack("Q",len(a))+a
-        # client_socket.sendall(message)
-        controllerInputs = receive(client_socket)
-        #lastAngle = motorControl(controllerInputs[0], lastAngle, servo1)
-        #lastSpeed = motorControl(controllerInputs[1], lastSpeed, motor)
+        while(True): #vid.isOpened()
+            img,frame = vid.read()
+            a = pickle.dumps(frame)
+            message = struct.pack("Q",len(a))+a
+            # client_socket.sendall(message)
+            controllerInputs = receive(client_socket)
+            #lastAngle = motorControl(controllerInputs[0], lastAngle, servo1)
+            #lastSpeed = motorControl(controllerInputs[1], lastSpeed, motor)
 
 
 if __name__ == "__main__":
