@@ -135,7 +135,7 @@ def new_new_main():
             img,frame = vid.read()
             a = pickle.dumps(frame)
             message = struct.pack("Q",len(a))+a
-            client_socket.sendall(message)
+            # client_socket.sendall(message)
             controllerInputs = receive(client_socket)
             lastAngle = motorControl(controllerInputs[0], lastAngle, servo1)
             lastSpeed = motorControl(controllerInputs[0], lastSpeed, motor)
