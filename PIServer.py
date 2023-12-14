@@ -10,6 +10,7 @@ def receive(client_socket):
     data = client_socket.recv(13)              #Latest Error (Matching Client.py) - OSError: [Errno 107] Transport endpoint is not connected
     data = data.decode('utf-8')
     controllerInputs = [float(x) for x in data.split(',')]
+    print(data,len(controllerInputs),controllerInputs, sep='\n', end='\n\n')
     return controllerInputs
 
 
