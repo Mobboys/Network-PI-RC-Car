@@ -180,8 +180,8 @@ def new_new_main():
     joy = XboxController()
     # create socket
     client_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    host_ip = '192.168.0.99' # paste your server ip address here
-    port = 5000
+    host_ip = '172.20.10.15' #'rc-receiver-tcp.at.remote.it' #'rc-receiver-tcp.at.remote.it' #'192.168.0.99' # '172.20.10.2'
+    port = 33002 #33002 #5000
     client_socket.connect((host_ip,port)) # a tuple
     data = b""
     payload_size = struct.calcsize("Q")
