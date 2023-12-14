@@ -21,7 +21,7 @@ def send(s, cap):
 
 
 def motorControl(controllerInputs, lastAngle, servo1):
-    angle = controllerInputs[0]
+    angle = controllerInputs
     if lastAngle != angle:
         #print(angle)
         servo1.ChangeDutyCycle(2+(angle/18))
@@ -100,6 +100,11 @@ def new_new_main():
     servo1 = GPIO.PWM(11, 50)  # Note 11 is pin, 50 = 50Hz pulse
     servo1.start(0)
     lastAngle = 0
+
+    GPIO.setup(13, GPIO.OUT)
+    motor = GPIO.PWM(13, 50)
+    motor.start(0)
+    lastSpeed = 0
         # Socket Create
     server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     FRAME_WIDTH = 1920 // 10000
@@ -132,7 +137,8 @@ def new_new_main():
             message = struct.pack("Q",len(a))+a
             client_socket.sendall(message)
             controllerInputs = receive(client_socket)
-            lastAngle = motorControl(controllerInputs, lastAngle, servo1)
+            lastAngle = motorControl(controllerInputs[0], lastAngle, servo1)
+            lastSpeed = motorControl(controllerInputs[0], lastSpeed, motor)
 
 
 if __name__ == "__main__":

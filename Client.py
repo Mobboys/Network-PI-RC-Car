@@ -101,6 +101,7 @@ class XboxController(object):
 def send_gamepad_data(joy, client_socket):
     x, y, x2, y2, a, b, rb = joy.read()
     x = round(x * 35 + 95, 1)
+    y = round(y * 50 + 50, 1)
     data = str('{},{},{},{},{}').format(x, y, x2, y2, rb).encode('utf-8')
     client_socket.sendall(data)
     #print(data)
@@ -180,8 +181,8 @@ def new_new_main():
     joy = XboxController()
     # create socket
     client_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    host_ip = '172.20.10.15' #'rc-receiver-tcp.at.remote.it' #'rc-receiver-tcp.at.remote.it' #'192.168.0.99' # '172.20.10.2'
-    port = 33002 #33002 #5000
+    host_ip = '192.168.0.99' #'rc-receiver-tcp.at.remote.it' #'rc-receiver-tcp.at.remote.it' #'192.168.0.99' # '172.20.10.2'
+    port = 5000 #33002 #5000
     client_socket.connect((host_ip,port)) # a tuple
     data = b""
     payload_size = struct.calcsize("Q")
