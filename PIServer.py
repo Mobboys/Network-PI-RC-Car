@@ -136,9 +136,10 @@ def new_new_main():
             a = pickle.dumps(frame)
             message = struct.pack("Q",len(a))+a
             # client_socket.sendall(message)
-            controllerInputs = receive(client_socket)
+            data = receive(client_socket)
+            controllerInputs = [float(x) for x in data.split(',')]
             lastAngle = motorControl(controllerInputs[0], lastAngle, servo1)
-            lastSpeed = motorControl(controllerInputs[0], lastSpeed, motor)
+            lastSpeed = motorControl(controllerInputs[1], lastSpeed, motor)
 
 
 if __name__ == "__main__":
