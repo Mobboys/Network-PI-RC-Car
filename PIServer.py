@@ -131,7 +131,7 @@ def new_new_main():
         vid.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
         vid.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
         
-        while(vid.isOpened()):
+        while(True): #vid.isOpened()
             img,frame = vid.read()
             a = pickle.dumps(frame)
             message = struct.pack("Q",len(a))+a
