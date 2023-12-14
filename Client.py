@@ -101,7 +101,7 @@ class XboxController(object):
 def send_gamepad_data(joy, client_socket):
     x, y, x2, y2, a, b, rb = joy.read()
     x = round(x * 35 + 95, 1)
-    y = round(y * 50 + 50, 1)
+    #y = round(y * 50 + 50, 1)
     data = str('{},{},{},{},{}').format(x, y, x2, y2, rb).encode('utf-8')
     client_socket.sendall(data)
     #print(data)

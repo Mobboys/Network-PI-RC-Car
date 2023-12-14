@@ -102,7 +102,7 @@ def new_new_main():
     lastAngle = 0
 
     GPIO.setup(13, GPIO.OUT)
-    motor = GPIO.PWM(13, 50)
+    motor = GPIO.PWM(13, 27.045)
     motor.start(0)
     lastSpeed = 0
         # Socket Create
