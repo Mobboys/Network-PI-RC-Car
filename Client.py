@@ -98,11 +98,11 @@ class XboxController(object):
                         self.DownDPad = event.state
 
 
-def send_gamepad_data(serverAddress, joy, s):
+def send_gamepad_data(joy, client_socket):
     x, y, x2, y2, a, b, rb = joy.read()
     x = round(x * 35 + 95, 1)
     data = str('{},{},{},{},{}').format(x, y, x2, y2, rb).encode('utf-8')
-    s.sendall(data)
+    client_socket.sendall(data)
     #print(data)
 
 
@@ -177,6 +177,7 @@ def new_main():
             #print(full_msg)
 
 def new_new_main():
+    joy = XboxController()
     # create socket
     client_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     host_ip = '192.168.0.99' # paste your server ip address here
@@ -202,6 +203,7 @@ def new_new_main():
         key = cv2.waitKey(1) & 0xFF
         if key  == ord('q'):
             break
+        send_gamepad_data(joy, client_socket)
     client_socket.close()
     
 

@@ -6,8 +6,8 @@ import pickle
 import struct
 
 
-def receive(s, bufferSize):
-    data = s.recv(bufferSize)              #Latest Error (Matching Client.py) - OSError: [Errno 107] Transport endpoint is not connected
+def receive(client_socket):
+    data = client_socket.recv(1024)              #Latest Error (Matching Client.py) - OSError: [Errno 107] Transport endpoint is not connected
     data = data.decode('utf-8')
     controllerInputs = [float(x) for x in data.split(',')]
     return controllerInputs
@@ -94,6 +94,12 @@ def new_main():
         time.sleep(4)
 
 def new_new_main():
+    GPIO.setwarnings(False)
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(11, GPIO.OUT)
+    servo1 = GPIO.PWM(11, 50)  # Note 11 is pin, 50 = 50Hz pulse
+    servo1.start(0)
+    lastAngle = 0
         # Socket Create
     server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     FRAME_WIDTH = 1920 // 10000
@@ -115,7 +121,6 @@ def new_new_main():
     #while True:
     client_socket,addr = server_socket.accept()
     print('GOT CONNECTION FROM:',addr)
-    start_time = time.time()
     if client_socket:
         vid = cv2.VideoCapture(0)
         vid.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
@@ -126,9 +131,8 @@ def new_new_main():
             a = pickle.dumps(frame)
             message = struct.pack("Q",len(a))+a
             client_socket.sendall(message)
-            end_time = time.time()
-            print(start_time-end_time)
-                
+            controllerInputs = receive(client_socket)
+            lastAngle = motorControl(controllerInputs, lastAngle, servo1)
 
 
 if __name__ == "__main__":
