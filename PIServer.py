@@ -7,7 +7,7 @@ import struct
 
 
 def receive(client_socket):
-    data = client_socket.recv(16)              #Latest Error (Matching Client.py) - OSError: [Errno 107] Transport endpoint is not connected
+    data = client_socket.recv(1024)              #Latest Error (Matching Client.py) - OSError: [Errno 107] Transport endpoint is not connected
     data = data.decode('utf-8')
     print(data)
     controllerInputs = [float(x) for x in data.split(',')]
