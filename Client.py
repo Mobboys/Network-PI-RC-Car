@@ -103,7 +103,7 @@ def send_gamepad_data(joy, client_socket):
     print(x, y, x2, y2, rb)
     x = round(x * 35 + 95, 1)
     y = round(y * 5 + 15, 1)
-    data = str('{},{},{},{},{},000').format(x, y, x2, y2, rb).encode('utf-8')
+    data = str('{},{},{},{},{},000,').format(x, y, x2, y2, rb).encode('utf-8')
     client_socket.send(data)
     #print(data)
 
