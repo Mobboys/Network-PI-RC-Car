@@ -206,7 +206,7 @@ def new_new_main():
         # if key  == ord('q'):
         #     break
         send_gamepad_data(joy, client_socket)
-        time.sleep(.01)
+        time.sleep(1)
     client_socket.close()
     
 

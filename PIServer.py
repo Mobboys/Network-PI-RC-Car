@@ -11,6 +11,7 @@ def receive(client_socket):
     data = data.decode('utf-8')
     print(data)
     #controllerInputs = [float(x) for x in data.split(',')]
+    controllerInputs = []
     return controllerInputs
 
 
