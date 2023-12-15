@@ -138,8 +138,8 @@ def new_new_main():
             message = struct.pack("Q",len(a))+a
             # client_socket.sendall(message)
             controllerInputs = receive(client_socket)
-            #lastAngle = motorControl(controllerInputs[0], lastAngle, servo1)
-            #lastSpeed = motorControl(controllerInputs[1], lastSpeed, motor)
+            lastAngle = motorControl(controllerInputs[0], lastAngle, servo1)
+            lastSpeed = motorControl(controllerInputs[1], lastSpeed, motor)
 
 
 if __name__ == "__main__":
