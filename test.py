@@ -2,7 +2,8 @@ import cv2
 import pickle
 import socket
 import base64
-import numpy as np
+import numpy
+from flask import Flask, render_template, Response, stream_with_context, request
 
 
 FRAME_WIDTH = 1920 // 2
@@ -10,12 +11,12 @@ FRAME_HEIGHT = 1080 // 2
 
 def main():
 
-    t = np.arange(3, dtype=np.float64)
+    t = numpy.arange(3, dtype=numpy.float64)
     s = base64.b64encode(t)
     r = base64.decodebytes(s)
-    q = np.frombuffer(r, dtype=np.float64)
+    q = numpy.frombuffer(r, dtype=numpy.float64)
 
-    print(np.allclose(q, t))
+    print(numpy.allclose(q, t))
 
     cap = cv2.VideoCapture(0)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
@@ -28,7 +29,7 @@ def main():
         #Frame = pickle.loads(serialized)                 #"trunkated"
         s = base64.b64encode(frame)
         r = base64.decodebytes(s)
-        q = np.frombuffer(r, dtype=np.float64)
+        q = numpy.frombuffer(r, dtype=numpy.float64)
         print(len(q))
         cv2.imshow('Camera Feed', frame)
     
@@ -51,5 +52,33 @@ def main_socket():
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         ...
 
+def https_main():
+    video = cv2.VideoCapture(0)
+    app = Flask('__name__')
+
+
+    def video_stream():
+        while True:
+            ret, frame = video.read()
+            if not ret:
+                break
+            else:
+                ret, buffer = cv2.imencode('.jpeg',frame)
+                frame = buffer.tobytes()
+                yield (b' --frame\r\n' b'Content-type: imgae/jpeg\r\n\r\n' + frame +b'\r\n')
+
+
+    @app.route('/camera')
+    def camera():
+        return render_template('camera.html')
+
+
+    @app.route('/video_feed')
+    def video_feed():
+        return Response(video_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
+    app.run(host='0.0.0.0', port='5000', debug=False)
+
 if __name__ == '__main__':
-    main()
+    https_main()
