@@ -48,7 +48,7 @@ def main():
     # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
 
     bufferSize = 1024
-    serverPort = 5000
+    serverPort = 5001
     serverIP = '192.168.0.27'
 
 
