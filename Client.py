@@ -130,9 +130,9 @@ def main():
 
         while True:
             send_gamepad_data(serverAddress, joy, s)
-            receive_image_data(s, bufferSize)  # uh oh he too big
-            if cv2.waitKey(1) == ord('q'):
-                break
+            # receive_image_data(s, bufferSize)  # uh oh he too big
+            # if cv2.waitKey(1) == ord('q'):
+                # break
             time.sleep(.01)
 
 def new_main():
@@ -211,4 +211,4 @@ def new_new_main():
     
 
 if __name__ == '__main__':
-    new_new_main()
+    main()

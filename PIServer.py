@@ -24,7 +24,7 @@ def send(s, cap):
 def motorControl(controllerInputs, lastAngle, servo1):
     angle = controllerInputs
     if lastAngle != angle:
-        #print(angle)
+        print(angle)
         servo1.ChangeDutyCycle(2+(angle/18))
         lastAngle = angle
         return angle
@@ -40,12 +40,12 @@ def main():
     servo1.start(0)
     lastAngle = 0
 
-    FRAME_WIDTH = 1920 // 2
-    FRAME_HEIGHT = 1080 // 2
-    VIDEO_DEVICE = 0
-    cap = cv2.VideoCapture(VIDEO_DEVICE)
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
+    # FRAME_WIDTH = 1920 // 2
+    # FRAME_HEIGHT = 1080 // 2
+    # VIDEO_DEVICE = 0
+    # cap = cv2.VideoCapture(VIDEO_DEVICE)
+    # cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
+    # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
 
     bufferSize = 1024
     serverPort = 5000
@@ -66,7 +66,7 @@ def main():
             while True:
                 controllerInputs = receive(s, bufferSize)
                 lastAngle = motorControl(controllerInputs, lastAngle, servo1)
-                send(s, cap)  # uh oh he too big
+                # send(s, cap)  # uh oh he too big
 
 def new_main():
     FRAME_WIDTH = 1920 // 10000
@@ -143,4 +143,4 @@ def new_new_main():
 
 
 if __name__ == "__main__":
-    new_new_main()
+    main()
