@@ -98,13 +98,13 @@ class XboxController(object):
                         self.DownDPad = event.state
 
 
-def send_gamepad_data(joy, client_socket):
+def send_gamepad_data(joy, s):
     x, y, x2, y2, a, b, rb = joy.read()
     print(x, y, x2, y2, rb)
     x = round(x * 35 + 95, 1)
     y = round(y * 5 + 15, 1)
     data = str('{},{},{},{},{},0000').format(x, y, x2, y2, rb).encode('utf-8')
-    client_socket.send(data)
+    s.sendall(data)
     #print(data)
 
 
@@ -118,7 +118,7 @@ def receive_image_data(s, bufferSize):
 
 
 def main():
-    serverAddress = ('rc-receiver-udp.at.remote.it', 33001)#('192.168.0.27', 5000)#('rc-receiver-udp.at.remote.it', 33001)
+    serverAddress = ('rc-receiver-udp.at.remote.it', 5001)#('192.168.0.27', 5000)#('rc-receiver-udp.at.remote.it', 33001)
     bufferSize = 1024
     joy = XboxController()
 
@@ -129,7 +129,7 @@ def main():
 
 
         while True:
-            send_gamepad_data(serverAddress, joy, s)
+            send_gamepad_data(joy, s)
             # receive_image_data(s, bufferSize)  # uh oh he too big
             # if cv2.waitKey(1) == ord('q'):
                 # break

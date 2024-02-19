@@ -6,8 +6,8 @@ import pickle
 import struct
 
 
-def receive(client_socket):
-    data = client_socket.recv(1024)              #Latest Error (Matching Client.py) - OSError: [Errno 107] Transport endpoint is not connected
+def receive(conn, bufferSize):
+    data = conn.recv(bufferSize)              #Latest Error (Matching Client.py) - OSError: [Errno 107] Transport endpoint is not connected
     data = data.decode('utf-8')
     print(data)
     controllerInputs = [float(x) for x in data.split(',')]
@@ -56,7 +56,7 @@ def main():
     #RPIsocket.bind((serverIP, serverPort))
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind((serverIP, serverPort))
-        s.listen(1)
+        s.listen()
         print ('Server Ready...')
         conn, addr = s.accept()
 
@@ -64,7 +64,7 @@ def main():
             print('Connected by', addr)
             
             while True:
-                controllerInputs = receive(s, bufferSize)
+                controllerInputs = receive(conn, bufferSize)
                 lastAngle = motorControl(controllerInputs, lastAngle, servo1)
                 # send(s, cap)  # uh oh he too big
 
