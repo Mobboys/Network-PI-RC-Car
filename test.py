@@ -164,12 +164,12 @@ def servo_test():
     pwm.setPWMFreq(50)
     while True:
     # setServoPulse(2,2500)
-        for i in range(1100,2200,10):  
+        for i in range(1150,2150,10):  
             pwm.setServoPulse(0,i)
             print(i)   
             time.sleep(0.02)     
         
-        for i in range(2200,1100,-10):
+        for i in range(2150,1150,-10):
             pwm.setServoPulse(0,i) 
             print(i)
             time.sleep(0.02)  
