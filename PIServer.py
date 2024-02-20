@@ -101,7 +101,7 @@ def send(s, cap):
 
 
 def motorControl(controllerInputs, lastAngle, pwm):
-    angle = controllerInputs
+    angle = controllerInputs[0]
     if lastAngle != angle:
         print(angle)
         pwm.setPWMFreq(50)
