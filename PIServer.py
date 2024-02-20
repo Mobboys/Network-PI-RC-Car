@@ -125,7 +125,7 @@ def main():
 
     bufferSize = 1024
     serverPort = 5001
-    serverIP = '192.168.0.27'
+    serverIP = '192.168.4.221'
 
 
     #RPIsocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
