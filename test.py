@@ -167,9 +167,8 @@ def servo_test():
         for i in range(1150,2100,10):  
             pwm.setServoPulse(0,i)
             print(i)   
-            time.sleep(0.02)     
+               
         
-        for i in range(2100,1150,-10):
             pwm.setServoPulse(0,i) 
             print(i)
             time.sleep(0.02)  
