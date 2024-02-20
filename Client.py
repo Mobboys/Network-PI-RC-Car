@@ -100,10 +100,10 @@ class XboxController(object):
 
 def send_gamepad_data(joy, s):
     x, y, x2, y2, a, b, rb = joy.read()
-    print(x, y, x2, y2, rb)
     x = round(x * 475 + 1625, 1)
     y = round(y * 475 + 1625, 1)
     data = str('{},{},{},{},{},0000').format(x, y, x2, y2, rb).encode('utf-8')
+    print(data)
     s.sendall(data)
     #print(data)
 

@@ -88,7 +88,6 @@ class PCA9685:
 def receive(conn, bufferSize):
     data = conn.recv(bufferSize)              #Latest Error (Matching Client.py) - OSError: [Errno 107] Transport endpoint is not connected
     data = data.decode('utf-8')
-    print(data)
     controllerInputs = [float(x) for x in data.split(',')]
     return controllerInputs
 
@@ -96,7 +95,6 @@ def receive(conn, bufferSize):
 def send(s, cap):
     _, frame = cap.read()
     serialized = pickle.dumps("test")
-    print (serialized)
     s.sendall(serialized) #OSError: [Errno 90] Message too long  <-   I only get this error when it uses RPIsocket
 
 
