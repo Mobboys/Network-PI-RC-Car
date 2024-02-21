@@ -112,13 +112,7 @@ def motorControl(controllerInputs, lastAngle, pwm):
 
 
 def main():
-    GPIO.setwarnings(False)
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(11, GPIO.OUT)
-    servo1 = GPIO.PWM(11, 50)  # Note 11 is pin, 50 = 50Hz pulse
-    servo1.start(0)
     lastAngle = 0
-
     pwm = PCA9685(0x40, debug=False)
 
     bufferSize = 1024
