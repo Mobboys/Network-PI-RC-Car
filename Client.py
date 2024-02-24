@@ -123,7 +123,7 @@ def main():
     joy = XboxController()
 
     #UDPClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:#not working, kept saying client refused connection when using remote.it
+    with socket.socket() as s:#socket.AF_INET, socket.SOCK_STREAM #not working, kept saying client refused connection when using remote.it
         s.connect(('rc-receiver-tcp.at.remote.it',33001))
         print("connected to", serverAddress)
 

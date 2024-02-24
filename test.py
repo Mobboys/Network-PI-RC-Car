@@ -128,8 +128,8 @@ def main():
     #cv2.destroyAllWindows()
 def main_socket():
 
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect(('rc-receiver-udp.at.remote.it',5001))
+    s=socket.socket()
+    s.connect(('rc-receiver-tcp.at.remote.it',33001))
 
 def https_main():
     video = cv2.VideoCapture(0)
