@@ -127,7 +127,7 @@ def main():
     #RPIsocket.bind((serverIP, serverPort))
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind((serverIP, serverPort))
-        s.listen()
+        s.listen(1)
         print ('Server Ready...')
         conn, addr = s.accept()
 

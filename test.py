@@ -5,7 +5,7 @@ import base64
 import numpy
 import time
 import math
-import smbus
+#import smbus
 from flask import Flask, render_template, Response, stream_with_context, request
 
 
@@ -129,7 +129,7 @@ def main():
 def main_socket():
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        ...
+        s.connect(('rc-receiver-udp.at.remote.it',5001))
 
 def https_main():
     video = cv2.VideoCapture(0)
@@ -175,5 +175,5 @@ def servo_test():
 
 
 if __name__ == '__main__':
-    servo_test()
+    main_socket()
     

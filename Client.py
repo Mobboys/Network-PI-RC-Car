@@ -118,13 +118,13 @@ def receive_image_data(s, bufferSize):
 
 
 def main():
-    serverAddress = ('192.168.4.221',5001) #('rc-receiver-tcp.at.remote.it', 33002)#('192.168.0.27', 5000)#('rc-receiver-udp.at.remote.it', 33001)
+    serverAddress = ('rc-receiver-udp.at.remote.it',5001) #('rc-receiver-tcp.at.remote.it', 33002)#('192.168.0.27', 5000)#('rc-receiver-udp.at.remote.it', 33001)
     bufferSize = 1024
     joy = XboxController()
 
     #UDPClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:#not working, kept saying client refused connection when using remote.it
-        s.connect(serverAddress)
+        s.connect(('rc-receiver-udp.at.remote.it',5001))
         print("connected to", serverAddress)
 
 
