@@ -104,7 +104,7 @@ def send_gamepad_data(joy, s):
     y = round(y * 475 + 1625, 1)
     data = str('{},{},{},{},{},0000').format(x, y, x2, y2, rb).encode('utf-8')
     print(data)
-    s.sendall(data)
+    s.send(data)
     #print(data)
 
 
@@ -123,8 +123,8 @@ def main():
     joy = XboxController()
 
     #UDPClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:#not working, kept saying client refused connection when using remote.it
-        s.connect(('rc-receiver-udp.at.remote.it',5001))
+    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:#not working, kept saying client refused connection when using remote.it
+        s.connect(('rc-receiver-tcp.at.remote.it',33001))
         print("connected to", serverAddress)
 
 
