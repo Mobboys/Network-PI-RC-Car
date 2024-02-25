@@ -137,6 +137,7 @@ def main():
             while True:
                 controllerInputs = receive(conn, bufferSize)
                 lastAngle = motorControl(controllerInputs, lastAngle, pwm)
+                time.sleep(.01)
                 # send(s, cap)  # uh oh he too big
 
 def new_main():
