@@ -26,7 +26,7 @@ class PCA9685:
   __ALLLED_OFF_L       = 0xFC
   __ALLLED_OFF_H       = 0xFD
 
-  def __init__(self, address=0x40, debug=True):
+  def __init__(self, address=0x40, debug=False):
     self.bus = smbus.SMBus(1)
     self.address = address
     self.debug = debug
@@ -116,7 +116,7 @@ def motorControl(controllerInputs, lastAngle, pwm):
 
 def main():
     lastAngle = 0
-    pwm = PCA9685(0x40, debug=False)
+    pwm = PCA9685(0x40, debug=True)
 
     bufferSize = 1024
     serverPort = 5001
