@@ -101,7 +101,12 @@ class XboxController(object):
 def send_gamepad_data(joy, s):
     x, y, x2, y2, a, b, rb = joy.read()
     x = round(x * 475 + 1625, 1)
-    y = round(y * 475 + 1625, 1)
+    if(a == 1):
+        y = 1150
+    elif(b == 1):
+        y = 2100
+    else:
+        y = round(y * 475 + 1625, 1)
     data = str('{},{},{},{},{},0000').format(x, y, x2, y2, rb).encode('utf-8')
     print(data)
     s.send(data)
@@ -118,13 +123,14 @@ def receive_image_data(s, bufferSize):
 
 
 def main():
-    serverAddress = ('rc-receiver-udp.at.remote.it',5001) #('rc-receiver-tcp.at.remote.it', 33002)#('192.168.0.27', 5000)#('rc-receiver-udp.at.remote.it', 33001)
+    serverAddress = ('192.168.4.229', 5001)#('rc-receiver-udp.at.remote.it',5001) #('rc-receiver-tcp.at.remote.it', 33002)#('192.168.0.27', 5000)#('rc-receiver-udp.at.remote.it', 33001)
     bufferSize = 1024
     joy = XboxController()
+    tuned = False
 
     #UDPClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     with socket.socket() as s:#socket.AF_INET, socket.SOCK_STREAM #not working, kept saying client refused connection when using remote.it
-        s.connect(('rc-receiver-tcp.at.remote.it',33001))
+        s.connect(serverAddress)
         print("connected to", serverAddress)
 
 
