@@ -116,7 +116,7 @@ def motorControl(controllerInputs, lastAngle, pwm):
 
 def main():
     lastAngle = 0
-    pwm = PCA9685(0x40, debug=True)
+    pwm = PCA9685(0x40, debug=False)
 
     bufferSize = 1024
     serverPort = 5001
