@@ -127,7 +127,7 @@ def main():
     pwm = PCA9685(0x40, debug=False)
     Encoded = False
 
-    bufferSize = 32
+    bufferSize = 1024
     serverPort = 5001
     serverIP = '192.168.4.229'
 

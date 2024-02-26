@@ -111,7 +111,7 @@ def send_gamepad_data(joy, s):
         y = round(y * 475 + 1625, 1)
     data = str('{},{},{},{},{}').format(x, y, x2, y2, rb).encode('utf-8')
     print(data)
-    s.send(data)
+    s.sendall(data)
     #print(data)
 
 
