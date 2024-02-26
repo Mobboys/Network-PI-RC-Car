@@ -102,7 +102,7 @@ def send_gamepad_data(joy, s):
     x, y, x2, y2, a, b, rb = joy.read()
     x2 = round(x2,1)
     y2 = round(y2,1)
-    x = round(x * 475 + 1625, 1)
+    x = round(-x * 475 + 1625, 1)
     if(a == 1):
         y = 1150
     elif(b == 1):
