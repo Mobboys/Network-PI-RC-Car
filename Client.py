@@ -36,7 +36,7 @@ class XboxController(object):
         self.RightDPad = 0
         self.UpDPad = 0
         self.DownDPad = 0
-        
+
         self._monitor_thread = threading.Thread(target=self._monitor_controller, args=())
         self._monitor_thread.daemon = True
         self._monitor_thread.start()
@@ -100,6 +100,8 @@ class XboxController(object):
 
 def send_gamepad_data(joy, s):
     x, y, x2, y2, a, b, rb = joy.read()
+    x2 = round(x2,1)
+    y2 = round(y2,1)
     x = round(x * 475 + 1625, 1)
     if(a == 1):
         y = 1150
@@ -107,7 +109,7 @@ def send_gamepad_data(joy, s):
         y = 2100
     else:
         y = round(y * 475 + 1625, 1)
-    data = str('{},{},{},{},{},0000').format(x, y, x2, y2, rb).encode('utf-8')
+    data = str('{},{},{},{},{}').format(x, y, x2, y2, rb).encode('utf-8')
     print(data)
     s.send(data)
     #print(data)
@@ -139,7 +141,7 @@ def main():
             # receive_image_data(s, bufferSize)  # uh oh he too big
             # if cv2.waitKey(1) == ord('q'):
                 # break
-            time.sleep(.01)
+            time.sleep(.05)
 
 def new_main():
     header_size = 10
