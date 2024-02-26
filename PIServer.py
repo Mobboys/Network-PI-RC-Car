@@ -102,6 +102,12 @@ def motorControl(controllerInputs, lastAngle, pwm):
     angle = controllerInputs[0]
     speed = controllerInputs[1]
     pwm.setPWMFreq(50)
+    if True:
+       speed = 1150
+       pwm.setServoPulse(1,speed)
+       time.sleep(3)
+       speed = 2100
+       pwm.setServoPulse(1,speed)
     pwm.setServoPulse(1,speed)
     if lastAngle != angle:
         print(angle)
