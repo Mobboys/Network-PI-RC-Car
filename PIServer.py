@@ -130,13 +130,6 @@ def main():
     serverPort = 5001
     serverIP = '192.168.4.229'
 
-    if not Encoded:
-      speed = 1150
-      pwm.setServoPulse(1,speed)
-      time.sleep(3)
-      speed = 2100
-      pwm.setServoPulse(1,speed)
-      Encoded = True
     #RPIsocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     #RPIsocket.bind((serverIP, serverPort))
     with socket.socket() as s: #socket.AF_INET, socket.SOCK_STREAM
