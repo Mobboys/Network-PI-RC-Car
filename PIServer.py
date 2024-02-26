@@ -99,26 +99,21 @@ def send(s, cap):
     s.sendall(serialized) #OSError: [Errno 90] Message too long  <-   I only get this error when it uses RPIsocket
 
 
-def motorControl(controllerInputs, lastAngle, pwm, Encoded):
-    angle = controllerInputs[0]
-    speed = controllerInputs[1]
-    pwm.setPWMFreq(50)
-    pwm.setServoPulse(1,speed)
-    if lastAngle != angle:
-        print(pwm)
+def motorControl(controllerInputs, lastPos, pwm, x):
+    pos = controllerInputs
+    if lastPos != pos:
         pwm.setPWMFreq(50)
-        # setServoPulse(2,2500)
-        pwm.setServoPulse(0,angle) 
-        lastAngle = angle
-        return angle
+        pwm.setServoPulse(x,pos) 
+        lastPos = pos
+        return pos
     else:
-        return lastAngle
+        return lastPos
 
 
 def main():
     lastAngle = 0
+    lastSpeed = 0
     pwm = PCA9685(0x40, debug=False)
-    Encoded = False
 
     bufferSize = 1024
     serverPort = 5001
@@ -137,7 +132,8 @@ def main():
             
             while True:
                 controllerInputs = receive(conn, bufferSize)
-                lastAngle = motorControl(controllerInputs, lastAngle, pwm, Encoded)
+                lastAngle = motorControl(controllerInputs[0], lastAngle, pwm, 0)
+                lastSpeed = motorControl(controllerInputs[1], lastSpeed, pwm, 1)
                 # send(s, cap)  # uh oh he too big
 
 def new_main():
