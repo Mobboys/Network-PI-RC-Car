@@ -5,7 +5,7 @@ import base64
 import numpy
 import time
 import math
-#import smbus
+import smbus
 from flask import Flask, render_template, Response, stream_with_context, request
 
 
