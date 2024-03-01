@@ -113,7 +113,8 @@ def motorControl(controllerInputs, lastPos, pwm, x):
 def main():
     lastAngle = 0
     lastSpeed = 0
-    pwm = PCA9685(0x40, debug=False)
+    motor = PCA9685(0x40, debug=False)
+    servo = PCA9685(0x40, debug=False)
 
     bufferSize = 1024
     serverPort = 5001
@@ -132,8 +133,8 @@ def main():
             
             while True:
                 controllerInputs = receive(conn, bufferSize)
-                lastAngle = motorControl(controllerInputs[0], lastAngle, pwm, 0)
-                lastSpeed = motorControl(controllerInputs[1], lastSpeed, pwm, 1)
+                lastAngle = motorControl(controllerInputs[0], lastAngle, servo, 0)
+                lastSpeed = motorControl(controllerInputs[1], lastSpeed, motor, 1)
                 # send(s, cap)  # uh oh he too big
 
 def new_main():
