@@ -134,13 +134,7 @@ def main():
             while True:
                 controllerInputs = receive(conn, bufferSize)
                 #lastAngle = motorControl(controllerInputs[0], lastAngle, servo, 0)
-                for i in range(1150,2100,10):  
-                    servo.setServoPulse(0,i)
-                    print(i)   
-                      
-                for i in range(2100,1150,-10):
-                    servo.setServoPulse(0,i) 
-                    print(i)
+
                 lastSpeed = motorControl(controllerInputs[1], lastSpeed, motor, 1)
                 # send(s, cap)  # uh oh he too big
 
