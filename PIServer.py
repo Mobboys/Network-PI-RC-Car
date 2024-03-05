@@ -133,7 +133,7 @@ def main():
             
             while True:
                 controllerInputs = receive(conn, bufferSize)
-                #lastAngle = motorControl(controllerInputs[0], lastAngle, servo, 0)
+                lastAngle = motorControl(controllerInputs[0], lastAngle, servo, 0)
 
                 lastSpeed = motorControl(controllerInputs[1], lastSpeed, motor, 1)
                 # send(s, cap)  # uh oh he too big
