@@ -102,7 +102,6 @@ def send(s, cap):
 def motorControl(controllerInputs, lastPos, pwm, x):
     pos = controllerInputs
     if lastPos != pos:
-        pwm.setPWMFreq(50)
         pwm.setServoPulse(x,pos) 
         lastPos = pos
         return pos
@@ -115,6 +114,8 @@ def main():
     lastSpeed = 0
     motor = PCA9685(0x40, debug=False)
     servo = PCA9685(0x40, debug=False)
+    motor.setPWMFreq(50)
+    servo.setPWMFreq(50)
 
     bufferSize = 1024
     serverPort = 5001
