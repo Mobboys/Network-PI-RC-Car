@@ -138,7 +138,7 @@ def main():
 
                 lastSpeed = motorControl(controllerInputs[1], lastSpeed, motor, 1)
                 # send(s, cap)  # uh oh he too big
-                time.sleep(.02)
+                time.sleep(.05)
 
 def new_main():
     FRAME_WIDTH = 1920 // 10000
