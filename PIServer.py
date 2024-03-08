@@ -60,7 +60,7 @@ class PCA9685:
     if (self.debug):
       print("Final pre-scale: %d" % prescale)
 
-    oldmode = self.read(self.__MODE1)
+    oldmode = self.read(self.__MODE1);
     newmode = (oldmode & 0x7F) | 0x10        # sleep
     self.write(self.__MODE1, newmode)        # go to sleep
     self.write(self.__PRESCALE, int(math.floor(prescale)))
@@ -138,6 +138,7 @@ def main():
 
                 lastSpeed = motorControl(controllerInputs[1], lastSpeed, motor, 1)
                 # send(s, cap)  # uh oh he too big
+                time.sleep(.02)
 
 def new_main():
     FRAME_WIDTH = 1920 // 10000
