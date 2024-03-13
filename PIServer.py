@@ -7,6 +7,12 @@ import struct
 import time
 import math
 import smbus
+import numpy
+from flask import Flask, render_template, Response, stream_with_context, request
+
+
+video = cv2.VideoCapture(0)
+app = Flask('__name__')
 
 
 class PCA9685:
@@ -107,6 +113,27 @@ def motorControl(controllerInputs, lastPos, pwm, x):
         return pos
     else:
         return lastPos
+    
+    
+def video_stream():
+    while True:
+        ret, frame = video.read()
+        if not ret:
+            break
+        else:
+            ret, buffer = cv2.imencode('.jpeg',frame)
+            frame = buffer.tobytes()
+            yield (b' --frame\r\n' b'Content-type: imgae/jpeg\r\n\r\n' + frame +b'\r\n')
+
+
+@app.route('/camera')
+def camera():
+    return render_template('camera.html')
+
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(video_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 def main():
@@ -120,6 +147,8 @@ def main():
     bufferSize = 1024
     serverPort = 5001
     serverIP = '192.168.4.229'
+
+    app.run(host='0.0.0.0', port='5000', debug=False)
 
     #RPIsocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     #RPIsocket.bind((serverIP, serverPort))
@@ -138,80 +167,8 @@ def main():
 
                 lastSpeed = motorControl(controllerInputs[1], lastSpeed, motor, 1)
                 # send(s, cap)  # uh oh he too big
+                
                 time.sleep(.05)
-
-def new_main():
-    FRAME_WIDTH = 1920 // 10000
-    FRAME_HEIGHT = 1080 // 10000
-    VIDEO_DEVICE = 0
-    cap = cv2.VideoCapture(VIDEO_DEVICE)
-    cap.set(cv2.CAP_PROP_FPS, 5)
-    #cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
-    #cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
-
-    header_size = 10
-
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind(('192.168.0.99', 5000))
-    s.listen(5)
-    clientsocket, address = s.accept()
-    print(f"Connection from {address} has been made!")
-
-    while True:
-        _, frame = cap.read()
-        msg = pickle.dumps(frame)
-        msg = bytes(f'{len(msg):<{header_size}}', 'utf-8') + msg
-
-        clientsocket.sendall(msg)
-
-        time.sleep(4)
-
-def new_new_main():
-    GPIO.setwarnings(False)
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(11, GPIO.OUT)
-    servo1 = GPIO.PWM(11, 50)  # Note 11 is pin, 50 = 50Hz pulse
-    servo1.start(0)
-    lastAngle = 0
-
-    GPIO.setup(13, GPIO.OUT)
-    motor = GPIO.PWM(13, 100.8)
-    motor.start(0)
-    lastSpeed = 0
-        # Socket Create
-    server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    FRAME_WIDTH = 1920 // 10000
-    FRAME_HEIGHT = 1080 // 10000
-    #host_name  = socket.gethostname()
-    host_ip = '192.168.0.99' #'172.20.10.2' #'192.168.0.99' #socket.gethostbyname(host_name)
-    print('HOST IP:',host_ip)
-    port = 5000
-    socket_address = (host_ip,port)
-
-    # Socket Bind
-    server_socket.bind(socket_address)
-
-    # Socket Listen
-    server_socket.listen(5)
-    print("LISTENING AT:",socket_address)
-
-    # Socket Accept
-    #while True:
-    client_socket,addr = server_socket.accept()
-    print('GOT CONNECTION FROM:',addr)
-    if client_socket:
-        vid = cv2.VideoCapture(0)
-        vid.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_WIDTH)
-        vid.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT)
-        
-        while(True): #vid.isOpened()
-            img,frame = vid.read()
-            a = pickle.dumps(frame)
-            message = struct.pack("Q",len(a))+a
-            # client_socket.sendall(message)
-            controllerInputs = receive(client_socket)
-            lastAngle = motorControl(controllerInputs[0], lastAngle, servo1)
-            lastSpeed = motorControl(controllerInputs[1], lastSpeed, motor)
 
 
 if __name__ == "__main__":
