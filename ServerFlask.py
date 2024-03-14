@@ -1,7 +1,7 @@
-from websockets.server import WebSocketApp
+from websockets.server import WebSocketServer
 import json
 
-ws = WebSocketApp("0.0.0.0", 8080)
+ws = WebSocketServer("0.0.0.0", 8080)
 
 def on_message(ws, message):
   data = json.loads(message)
