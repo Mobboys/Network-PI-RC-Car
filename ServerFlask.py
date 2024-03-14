@@ -1,4 +1,4 @@
-import websocket
+import websockets
 import json
 
 ws = websocket.WebSocketApp("0.0.0.0", 8080)
